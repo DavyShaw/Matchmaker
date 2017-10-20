@@ -1,0 +1,27 @@
+As a [role], I can [feature] so that [reason]
+As a [role], I want [feature] because [reason]
+As a [role], I can [feature]
+As a [role], I can [feature] so that [reason]
+As a [user type], I want to [function] so that [benefit]
+
+As a user, I want to find activities near me so that I can meet new people and get active
+As a user, I can select a particular activity that interests me
+As a user, I want to discover different activities nearby so that I can find a new hobby
+As a user, I want to create an account so that I can view all of my events in one place
+As a user, I want to have the ability to save previous searches
+As a user, I want to be able to view activities on a map so that I can easily locate the event
+As a user, I want to see how many people are planning on going to an event
+As a user, I can chat to other members within the same event
+As a user, I can save my event to my Google Calendar for easy access
+As a user, I can save my sport/activity preferences so that suggestions can be made that are relevant to me
+As a user, I can join an activity easily
+As a user, I want to give feedback to the organiser of the event
+As a user, I want to create my own event if there is no other event that interests me
+As a user, I want the application to be fast and not use up too much memory
+
+
+
+------------------------------------------------------------------------------------
+Aside (will be removed when user stories finalised):
+Add things for future maybe? Not sure if it's suitable for user stories though.
+Something like: In a year I want the app to do x,y,z??

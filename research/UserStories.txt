@@ -19,6 +19,17 @@ As a user, I want to give feedback to the organiser of the event
 As a user, I want to create my own event if there is no other event that interests me
 As a user, I want the application to be fast and not use up too much memory
 
+As a user, I want to view previous events I have attended
+As a user, I want to view all the future events that I will attend
+As a user, I want to find events happening soon (today, tomorrow)
+As a user, I want to find events on a particular date
+As a user, I want to share events easily with my friends
+As a user, I want to join a group that organises events I am interested in
+As a user, I want to be able to create a group to host events on a regular basis
+As a user, I want to view upcoming events that I might like based on my interests and previous event history
+As a user, I want to view a route on a map from my location to the event location 
+As a user, I want to bookmark events if I am undecided and want to view them later
+
 
 
 ------------------------------------------------------------------------------------

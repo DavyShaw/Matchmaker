@@ -96,8 +96,7 @@ Can't seem to access the reviews - the ones I have seen are in French.
 ## Cara
 
 ## Pamela
-
-### Shapr:
+<span style="text-decoration: underline; color:#2E57D1">*Shapr* </span>
 #### Tagline: Data-Driven Networking.
 #### Rating in App Store: 4.1 stars out of 3,428 reviews.
 
@@ -106,35 +105,35 @@ Can't seem to access the reviews - the ones I have seen are in French.
 Negatives:
 ###############
 
-1. Small number of users in small cities.
-2. Unclear the location of the meeting. 
-3. Inbuilt messenger features unintuitive. 
-4. Navigation not straight forward. 
-5. Recommendations that are too far away - not sanity checked. 
-6. Swiping doesn't work. 
-7. Users want to be able to connect to people they meet on the app
+- Small number of users in small cities.
+- Unclear the location of the meeting. 
+- Inbuilt messenger features unintuitive. 
+- Navigation not straight forward. 
+- Recommendations that are too far away - not sanity checked. 
+- Swiping doesn't work. 
+- Users want to be able to connect to people they meet on the app
 on social media aswell. 
-8. App gets stuck on updating location. 
-9. Support team didn't get back - maintainability after deployment
+- App gets stuck on updating location. 
+- Support team didn't get back - maintainability after deployment
 considerations. 
-10. Irrelevant matches. 
-11. Users would like filtering ability for searches. 
-12. Negative comments re the UI - not specific. 
+- Irrelevant matches. 
+- Users would like filtering ability for searches. 
+- Negative comments re the UI - not specific. 
 
 Positives: 
 ###############
 
-1. Location updates automatically. 
-2. Users very pro the concept and just want better execution. 
+- Location updates automatically. 
+- Users very pro the concept and just want better execution. 
 
 ### Other Info: 
 
-1. Installs: 100k-500k
-2. Interactive Elements: Users interact, Shares info, Shares location. 
-3. In-App Purchases: None
-4. Requires Android: 4.1 and up.
+- Installs: 100k-500k
+- Interactive Elements: Users interact, Shares info, Shares location. 
+- In-App Purchases: None
+- Requires Android: 4.1 and up.
 
-### Buddify
+<span style="text-decoration: underline; color:#2E57D1">*Buddify* </span>
 #### Tagline: Chat & Meet new people
 #### App Store Rating: 3.9 stars out of 137 reviews.
 
@@ -143,30 +142,30 @@ Positives:
 Negatives:
 ################
 
-1. Fake users allowed. 
-2. Users unable to login after account setup. 
-3. App crashes regularly. 
-4. App doesn't work well offline. 
-5. Users want the option of push notifications. 
+- Fake users allowed. 
+- Users unable to login after account setup. 
+- App crashes regularly. 
+- App doesn't work well offline. 
+- Users want the option of push notifications. 
 
 Positives:
 ################
-1. Private messaging available. 
+- Private messaging available. 
 
 ###Other Info: 
 
-1. Installs: 10,000-50,000
-2. Interactive Elements: Users interact, Shares Info, Shares Location, 
+- Installs: 10,000-50,000
+- Interactive Elements: Users interact, Shares Info, Shares Location, 
 Digital purchases. 
-3. In-App Purchases (€0.79-€8.99 per item)
+- In-App Purchases (€0.79-€8.99 per item)
 
-### Sporting Around
+<span style="text-decoration: underline; color:#2E57D1">*Sporting Around* </span>
 #### Tagline: Join sports activities nearby!
 #### Rating in App Store: 3.7 out of 27 reviews.
 
 ### Some key points from user comments: 
 
---> Not enough reviews
+- Not enough reviews
 
 ## Davy
 

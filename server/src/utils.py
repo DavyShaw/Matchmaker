@@ -1,6 +1,7 @@
 
 def find(func, iterable):
-    """func should be a function that returns a boolean.
+    """
+    func should be a function that returns a boolean.
     iterable should be something that can be iterated over.
 
     @returns an item from iterable, or None

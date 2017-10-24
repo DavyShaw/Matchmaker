@@ -5,8 +5,8 @@ Provides a simple API for the MatchMaker android app.
 
 ### Services implimented so far:
 
-#### User
-##### Creating a user
+## User
+### Creating a user
 
 Send a PUT request to `$SERVER_URL/user`
 
@@ -28,7 +28,7 @@ If all goes well, the server will send a JSON response in the format:
 The name is the same as the value sent to the server. The id is a psudo-unique integer.
 
 
-##### Retrieving a user
+### Retrieving a user
 
 Send a POST request to `$SERVER_URL/user`
 
@@ -57,9 +57,9 @@ If the user is not found, a response is sent with the status code `422` and body
 }
 ```
 
-#### Event
+## Event
 
-##### Creating an event
+### Creating an event
 
 Send a PUT request to `$SERVER_URL/event`
 

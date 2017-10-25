@@ -1,0 +1,8 @@
+**/*mypy*cache*
+**/*__pycache__*
+**/.vscode
+**/Data
+**/data
+**/venv/
+**/.DS_Store/
+

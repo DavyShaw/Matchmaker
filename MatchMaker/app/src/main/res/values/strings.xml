@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">MatchMaker</string>
+
+    <!-- Added to satisfy references in pref_general -->
+    <string name="pref_title_system_sync_settings">SyncSettings</string>
+    <string name="pref_description_social_recommendations">SocialRecsDesc</string>
+    <string name="pref_title_social_recommendations">SocialRecsTitle</string>
+    <string name="pref_default_display_name">DefaultDisplayName</string>
+    <string name="pref_title_display_name">TitleDisplayName</string>
+    <string name="pref_title_add_friends_to_messages">AddFriendsToMsgs</string>
+    <string-array
+        name="pref_example_list_titles">
+        <item>Example1</item>
+        <item>Example2</item>
+    </string-array>
+
+    <string-array
+        name="pref_example_list_values">
+        <item>ExampleValue1</item>
+        <item>ExampleValue2</item>
+    </string-array>
+
+    <!-- Added to satisfy references in pref_headers -->
+    <string name="pref_header_general">HeaderGeneral</string>
+    <string name="pref_header_notifications">HeaderNotifications</string>
+    <string name="pref_header_data_sync">HeaderDataSync</string>
+
+    <!-- Added to satisfy references in pref_notifications -->
+    <string name="pref_title_new_message_notifications">NewMsgNotif</string>
+    <string name="pref_title_ringtone">RingtoneTitle</string>
+    <string name="pref_title_vibrate">TitleVibrate</string>
+    <string name="pref_ringtone_silent">0</string>
 </resources>

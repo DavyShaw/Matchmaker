@@ -30,4 +30,9 @@
     <string name="pref_title_ringtone">RingtoneTitle</string>
     <string name="pref_title_vibrate">TitleVibrate</string>
     <string name="pref_ringtone_silent">0</string>
+
+    <!-- for the match preferences activity/ fragment -->
+    <string name="pref_sport_label">Sport or Activity</string>
+    <string name="pref_sport_key" translatable="false">sport</string>
+    <string name="pref_sport_default" translatable="false">Football</string>
 </resources>

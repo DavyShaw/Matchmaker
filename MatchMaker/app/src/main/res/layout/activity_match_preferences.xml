@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.matchmaker.matchmaker.MainActivity">
+    tools:context="com.matchmaker.matchmaker.MatchPreferencesActivity">
 
-    <Button
-        android:id="@+id/matchPrefButton"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="sendMessage"
-        android:text="@string/button_send"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="112dp" />
+        android:text="TextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp" />
 </android.support.constraint.ConstraintLayout>

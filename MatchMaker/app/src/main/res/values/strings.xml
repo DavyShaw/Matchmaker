@@ -36,4 +36,13 @@
     <string name="pref_sport_default" translatable="false">Football</string>
     <string name="match_preferences">Match Preferences</string>
     <string name="button_send">Search Matches</string>
+    <string-array name="sports_list_values">
+        <item>Football</item>
+        <item>Gaelic</item>
+        <item>Hurling</item>
+        <item>Running</item>
+        <item>Tennis</item>
+        <item>Badminton</item>
+    </string-array>
+    <item name="sports_spinner" type="id">Choose Your Activity</item>
 </resources>

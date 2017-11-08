@@ -41,4 +41,31 @@
         android:editable="false"
         android:focusable="false"/>
 
+    <EditText
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/date_hint"
+        android:inputType="date"
+        android:imeOptions="actionSend"
+        android:onClick="showDatePickerDialog"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time"
+        android:editable="false"
+        android:focusable="false"/>
+
+    <Button
+        android:id="@+id/submitPreferences"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="sendPreferences"
+        android:text="@string/preferences_send"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date" />
+
 </android.support.constraint.ConstraintLayout>

@@ -32,9 +32,6 @@ public class MainActivity extends AppCompatActivity {
      * (It is the View object that was clicked)*/
     public void sendMessage (View view) {
         Intent intent = new Intent(this, MatchPreferencesActivity.class);
-        // EditText editText = (EditText) findViewById(R.id.editText);
-        // String message = editText.getText().toString();
-        // intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
 

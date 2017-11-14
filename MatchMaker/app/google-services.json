@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "818521544223",
+    "firebase_url": "https://matchmaker-a84d0.firebaseio.com",
+    "project_id": "matchmaker-a84d0",
+    "storage_bucket": "matchmaker-a84d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818521544223:android:e68294a6b8f04572",
+        "android_client_info": {
+          "package_name": "com.matchmaker.matchmaker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818521544223-uvn8aesr3ph0u6m3hq4ftt5r56got11m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.matchmaker.matchmaker",
+            "certificate_hash": "fd29b106b899c29b7b5cba5cba74483bbf671250"
+          }
+        },
+        {
+          "client_id": "818521544223-10d4jq1db90o27rs7i03ldp9p99ejonm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.matchmaker.matchmaker",
+            "certificate_hash": "f9d3d1e0ea81e2e0a8dbe768b956280b2ed85c30"
+          }
+        },
+        {
+          "client_id": "818521544223-u024d3at7nlrmkjkao2f98c0p88baak0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMN34-wmKdD-o_ijh0YjV1W_3mNcDZiDE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818521544223-u024d3at7nlrmkjkao2f98c0p88baak0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

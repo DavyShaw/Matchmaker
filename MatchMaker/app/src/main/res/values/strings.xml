@@ -71,5 +71,7 @@
     <string name="time_hint">Select Time</string>
     <string name="date_hint">Select Date</string>
     <string name="preferences_send">Find a Match!</string>
+    <string name="nickname">Enter nickname</string>
+    <string name="preferences">What are your preferences?</string>
 
 </resources>

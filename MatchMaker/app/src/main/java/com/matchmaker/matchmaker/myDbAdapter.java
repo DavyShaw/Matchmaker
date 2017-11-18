@@ -36,7 +36,7 @@ public class myDbAdapter {
         return id;
     }
 
-    // This gets a single user
+    // This gets the data for a single user
     public String getSingleData(String email) {
         // Get the user id here? - use user name for now - need to get a value from the user login
         //String userName = new String("emma");
@@ -66,7 +66,7 @@ public class myDbAdapter {
         return buffer.toString();
     }
 
-    // This gets all the data
+    // This gets all the data in the database and returns it as a string
     public String getData() {
         System.out.println("\n\n\nIn the get data method\n\n\n");
         SQLiteDatabase db = dbAdapter.getWritableDatabase();

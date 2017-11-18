@@ -140,7 +140,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             // update the data in the db - get current username - use that to update db
             String[] splitted = data.split("\\s+"); // index 1 is name, index 2 is pass
             if (username.isEmpty()){
-                // if no username is provided, keep the same one
+                // if no username is provided, use the name that is already there
                 username = splitted[1];
             }
             String updatePref = preferences.toString();

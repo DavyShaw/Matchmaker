@@ -37,20 +37,17 @@ public class userAccount extends AppCompatActivity {
         System.out.println("The database was created");
 
         LinearLayout layout = (LinearLayout) findViewById(R.id.boxes);
-        System.out.println("the child count is " + layout.getChildCount());
+        //System.out.println("the child count is " + layout.getChildCount());
 
-        // https://stackoverflow.com/questions/39438950/get-all-child-views-inside-linear-layout
-        for (int x = 0; x< layout.getChildCount();x++) {
+        // This will access the checkboxes and
+        // Ideas for accessing the child elements in android adapted from: https://stackoverflow.com/questions/39438950/get-all-child-views-inside-linear-layout
+        for (int x = 0; x < layout.getChildCount();x++) {
             CheckBox cb = (CheckBox) layout.getChildAt(x);
             System.out.println(cb.getText());
             if (cb.isChecked()) {
                 System.out.println("This checkbox");
             }
         }
-
-
-
-
     }
 
     // view the data sent from the profile activity
@@ -62,32 +59,10 @@ public class userAccount extends AppCompatActivity {
         EditText editText1 = (EditText) findViewById(R.id.preferences);
         String name = editText.getText().toString();
         String preferences = editText1.getText().toString();
-//        System.out.println(preferences.length());
-//
-//        Character[] arr = new Character[preferences.length()];
-//
-//        for(int x = 0; x < preferences.length(); x++) {
-////            System.out.print(preferences.charAt(x));
-////            System.out.print("\n");
-//            arr[x] = preferences.charAt(x);
-//        }
-//        System.out.println("\n\n\n the preferences are " + preferences + "\n\n\n");
-//        System.out.println(arr);
-//        // create db and entry with this info
-        //long id = dbAdapter.insertData(name, "1234");
-
-
-
-
-        //TextView textView = (TextView) findViewById(R.id.displayData);
-        //textView.setText(data);
-        //Message.message(this,data);
     }
 
     public void displayAllData(View view){
         String data = dbAdapter.getData();
         Message.message(this, data);
     }
-
-
 }

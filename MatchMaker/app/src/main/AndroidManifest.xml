@@ -22,9 +22,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".userAccount" />
+        <activity android:name=".userAccount"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".LoginActivity"
+            android:parentActivityName=".MainActivity"> <!-- change this to change where the back button brings you -->
             android:label="@string/title_activity_login"></activity>
 
         <activity android:name=".MatchPreferencesActivity"
@@ -35,8 +37,10 @@
                 android:value=".MainActivity"/>
         </activity>
 
-        <activity android:name=".RegisterScreen" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".RegisterScreen"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".ProfileActivity"
+            android:parentActivityName=".MainActivity"/>
 
 
 

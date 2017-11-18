@@ -26,6 +26,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -71,6 +76,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         // changing email to final - have to do this to create database below
         final String email = editTextEmail.getText().toString().trim();
         //String email = editTextEmail.getText().toString().trim();
+        // Is this safe to be passing around the password in plain text? - Pam
         String password = editTextPassword.getText().toString().trim();
 
         if(TextUtils.isEmpty(email)){

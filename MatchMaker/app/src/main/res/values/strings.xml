@@ -73,5 +73,6 @@
     <string name="preferences_send">Find a Match!</string>
     <string name="nickname">Enter nickname</string>
     <string name="preferences">What are your preferences?</string>
+    <string name="title_activity_signup">Signup</string>
 
 </resources>

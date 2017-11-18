@@ -25,6 +25,11 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
@@ -151,6 +156,29 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             textView.setText(dbAdapter.getSingleData(user.getEmail()));
             nickname.setText("");
         }
+        //############### Storing Data Remotely in Firebase ####################
+        // Add the user to the Users Info Table in the Firebase Database
+
+        // Get an instance of the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        // Get a reference for the "users" section
+        DatabaseReference myRef = database.getReference("users");
+
+
+        // Create a HashMap with all of user's details in it
+        Map<String, String> myMap = new HashMap<String, String>();
+        myMap.put("nickname", username);
+        myMap.put("preferences", preferences.toString());
+        // Create these as empty for the moment
+        myMap.put("upcoming_matches", "");
+        myMap.put("past_matches", "");
+
+        // Push this info to the database as a child node of "users" with the key username
+        // Use email as key because nickname can change
+        String myEmail = user.getEmail();
+        // if you want to split by . you have to escape it because . in regex means any character
+        myEmail = myEmail.split("\\.")[0];
+        myRef.child(myEmail).setValue(myMap);
     }
 }
 

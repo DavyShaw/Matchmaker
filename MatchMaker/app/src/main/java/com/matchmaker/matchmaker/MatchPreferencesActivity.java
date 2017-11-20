@@ -108,10 +108,12 @@ public class MatchPreferencesActivity extends AppCompatActivity {
         System.out.println(userTimeChoice);
         // Connect to next activity in the sequence
         // TODO: Link correctly to Cara's Activity of options for matches
+        //Intent intent = new Intent(this, SearchResults.class);
+        //startActivity(intent);
         // Intent intent = new Intent(this, CarasLovelyActivity.class);
+        //Intent intent = new Intent(this, SearchResults.class);
         // send the above info to the intent OR send the result of the server query?
         // where to do server query?
-        // startActivity(intent);
     }
 }
 

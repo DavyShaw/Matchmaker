@@ -73,5 +73,11 @@
     <string name="preferences_send">Find a Match!</string>
     <string name="nickname">Enter nickname</string>
     <string name="preferences">What are your preferences?</string>
+    <string name="title_activity_signup">Signup</string>
+
+    <string name="create_match">Create your match!</string>
+    <string name="create_match_message">Welcome to the Event Creator Page!</string>
+    <string name="select_location">Select Location</string>
+    <string name="crate_event_name">Input Event Name</string>
 
 </resources>

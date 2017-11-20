@@ -1,7 +1,7 @@
 package com.matchmaker.matchmaker;
 /**************************************************************************************************
 Profile Activity
-Authors: Emma Byrne, Davy Shaw
+Authors: Emma Byrne, Davy Shaw, Pamela Kelly
 Date: 06/11/2017
 Course: COMP 41690 Android Programming
 Desc:
@@ -25,6 +25,11 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
@@ -87,6 +92,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
 
         buttonLogout.setOnClickListener(this);
+        Message.message(this, dbAdapter.getData());
     }
 
     @Override
@@ -104,53 +110,83 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         // if it isn't, create a db and populate it with the info given
         // if it is, call the update method to update the db
         FirebaseUser user = firebaseAuth.getCurrentUser();
+        System.out.println("\n\n\n\n\nThe firebase user is: " + user.getEmail());
+        //String data = dbAdapter.getSingleData(user.getEmail());
+        String[] accountName = user.getEmail().split("\\@"); // - accountName[0].toString() = name before @ sign
+        //long id = dbAdapter.insertData(accountName[0].toString();
         String data = dbAdapter.getSingleData(user.getEmail());
-
 
         // Get the information
         EditText nickname = (EditText) findViewById(R.id.nickname); // username
         String username = nickname.getText().toString();
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.boxes); // get the preferences
-        System.out.println("the child count is " + layout.getChildCount());
         StringBuilder preferences = new StringBuilder();
 
         // Idea for how to get the checked checkboxes adapted from https://stackoverflow.com/questions/39438950/get-all-child-views-inside-linear-layout
         for (int x = 0; x< layout.getChildCount();x++) {
             CheckBox cb = (CheckBox) layout.getChildAt(x);
-            System.out.println(cb.getText());
             if (cb.isChecked()) {
-                System.out.println("This checkbox is checked");
                 // Add each checked one to a string
-                preferences.append(cb.getText() + "  "); // two spaces here to separate the values
+                preferences.append(cb.getText() + ", ");
             }
         }
-        System.out.println("\n\n The string is " + preferences + "\n\n");
+        String pref = preferences.toString();
+        // Remove trailing comma in the string - https://stackoverflow.com/questions/9292940/how-to-remove-comma-if-string-having-comma-at-end
+        pref = pref.replaceAll(", $", "");
 
-        if (dbAdapter.getData() == null) {
+        // If there is no data in the database, create a new database
+        if (dbAdapter.getData() == "") {
             dbAdapter = new myDbAdapter(this);
-            System.out.println("The database was created");
             // insert the data - ask for name first
             if(username.isEmpty()){
                 Message.message(this, "Please enter a name");
             } else {
-                long id = dbAdapter.insertData(username, preferences.toString(), data);
+                // Get the user information - email
+                long id = dbAdapter.insertData(username, pref, user.getEmail(), "no_events_yet");
+                // populate the text view
+                TextView textView = (TextView) findViewById(R.id.displayData);
+                textView.setText(dbAdapter.getSingleData(user.getEmail()));
+                nickname.setText("");
+
             }
 
         } else {
             // update the data in the db - get current username - use that to update db
-            String[] splitted = data.split("\\s+"); // index 1 is name, index 2 is pass
+            String[] splitted = data.split("\\s+"); // index 1 is name
             if (username.isEmpty()){
                 // if no username is provided, use the name that is already there
                 username = splitted[1];
             }
-            String updatePref = preferences.toString();
-            dbAdapter.updateData(user.getEmail(), username, updatePref);
-            //dbAdapter.updateData(splitted[1], splitted[2], username, updatePref);
+            dbAdapter.updateData(user.getEmail(), username, pref);
             // update the textview
             TextView textView = (TextView) findViewById(R.id.displayData);
             textView.setText(dbAdapter.getSingleData(user.getEmail()));
             nickname.setText("");
         }
+
+        //############### Storing Data Remotely in Firebase ####################
+        // Add the user to the Users Info Table in the Firebase Database
+
+        // Get an instance of the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        // Get a reference for the "users" section
+        DatabaseReference myRef = database.getReference("users");
+
+
+        // Create a HashMap with all of user's details in it
+        Map<String, String> myMap = new HashMap<String, String>();
+        myMap.put("nickname", username);
+        myMap.put("preferences", preferences.toString());
+        // Create these as empty for the moment
+        myMap.put("upcoming_matches", "");
+        myMap.put("past_matches", "");
+
+        // Push this info to the database as a child node of "users" with the key username
+        // Use email as key because nickname can change
+        String myEmail = user.getEmail();
+        // if you want to split by . you have to escape it because . in regex means any character
+        myEmail = myEmail.split("\\.")[0];
+        myRef.child(myEmail).setValue(myMap);
     }
 }
 

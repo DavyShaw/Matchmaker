@@ -130,12 +130,4 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             startActivity(new Intent(this, LoginActivity.class));
         }
     }
-
-
-    // Test function
-    public void proceedToAcc(View view) {
-        // Create new intent to link button click to activity
-        Intent intent = new Intent(this, userAccount.class);
-        startActivity(intent);
-    }
 }

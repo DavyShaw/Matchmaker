@@ -24,9 +24,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".userAccount"
-            android:parentActivityName=".MainActivity" />
-        <activity
             android:name=".LoginActivity"
             android:parentActivityName=".MainActivity"> <!-- change this to change where the back button brings you -->
             android:label="@string/title_activity_login">

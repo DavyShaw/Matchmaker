@@ -1,6 +1,7 @@
 <resources>
     <!-- This is a string resources file where you should specify all your UI strings -->
     <string name="app_name">MatchMaker</string>
+    <string name="welcome">Welcome to MatchMaker!</string>
 
     <!-- Added to satisfy references in pref_general -->
     <string name="pref_title_system_sync_settings">SyncSettings</string>

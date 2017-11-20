@@ -58,7 +58,6 @@ public class myDbAdapter {
     }
 
     public String getEventData(String email) {
-        // Get the user id here? - use user name for now - need to get a value from the user login
         SQLiteDatabase db = dbAdapter.getWritableDatabase();
         String[] columns = {myDbHelper.UID,myDbHelper.NAME,myDbHelper.MyPREFERENCES,myDbHelper.EMAIL};
         String query = "SELECT * FROM " +myDbHelper.TABLE_NAME + " WHERE " + myDbHelper.EMAIL + " = '" + email + "'";
@@ -67,10 +66,6 @@ public class myDbAdapter {
         if (cursor.moveToFirst()) {
             do {
                 String events = cursor.getString(cursor.getColumnIndex(myDbHelper.MyEVENTS));
-//                int cid = cursor.getInt(cursor.getColumnIndex(myDbHelper.UID));
-//                String name = cursor.getString(cursor.getColumnIndex(myDbHelper.NAME));
-//                String preferences = cursor.getString(cursor.getColumnIndex(myDbHelper.MyPREFERENCES));
-//                String events = cursor.getString(cursor.getColumnIndex(myDbHelper.MyEVENTS));
                 userEvents.append(events);
             } while (cursor.moveToNext());
         }

@@ -45,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         dbAdapter = new myDbAdapter(this);
-        EditText nickname = (EditText) findViewById(R.id.nickname);
+        //EditText nickname = (EditText) findViewById(R.id.nickname);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -72,27 +72,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             textView.setText(data);
         }
 
-        //String[] accountName = email.split("\\@"); // to use the bit before the @ sign as username
-        //String userName = accountName[0].toString();
-
-        //String[] accountName = email.split("\\@");
-        //long id = dbAdapter.insertData(accountName[0].toString(), "helloworld");
-        //long id = dbAdapter.insertData(email, "");
-        //System.out.println("The user is " + userName);
-        //String data = dbAdapter.getSingleData(email);
-        //String data = dbAdapter.getSingleData(userName);
-//        System.out.println("The data is " + data);
-//        if (data == ""){
-//            userName = email;
-//            data = dbAdapter.getSingleData(userName);
-//        }
-
-        // query the db, if no info is present, display a message
-        // else show the data
-
-
         buttonLogout.setOnClickListener(this);
-        Message.message(this, dbAdapter.getData());
+        //Message.message(this, dbAdapter.getData());
     }
 
     @Override
@@ -110,10 +91,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         // if it isn't, create a db and populate it with the info given
         // if it is, call the update method to update the db
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        System.out.println("\n\n\n\n\nThe firebase user is: " + user.getEmail());
-        //String data = dbAdapter.getSingleData(user.getEmail());
         String[] accountName = user.getEmail().split("\\@"); // - accountName[0].toString() = name before @ sign
-        //long id = dbAdapter.insertData(accountName[0].toString();
         String data = dbAdapter.getSingleData(user.getEmail());
 
         // Get the information
@@ -123,7 +101,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         StringBuilder preferences = new StringBuilder();
 
         // Idea for how to get the checked checkboxes adapted from https://stackoverflow.com/questions/39438950/get-all-child-views-inside-linear-layout
-        for (int x = 0; x< layout.getChildCount();x++) {
+        for (int x = 0; x < layout.getChildCount();x++) {
             CheckBox cb = (CheckBox) layout.getChildAt(x);
             if (cb.isChecked()) {
                 // Add each checked one to a string
@@ -147,9 +125,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 TextView textView = (TextView) findViewById(R.id.displayData);
                 textView.setText(dbAdapter.getSingleData(user.getEmail()));
                 nickname.setText("");
-
             }
-
         } else {
             // update the data in the db - get current username - use that to update db
             String[] splitted = data.split("\\s+"); // index 1 is name

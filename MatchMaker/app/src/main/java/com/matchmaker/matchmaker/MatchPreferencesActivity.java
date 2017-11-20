@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +15,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.Calendar;
 
 public class MatchPreferencesActivity extends AppCompatActivity {
@@ -99,19 +110,40 @@ public class MatchPreferencesActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-
     public void sendPreferences(View view) {
         // Do something with match preferences - send query to server for matches which
         // align with these preferences
         System.out.println(userActivityChoice);
         System.out.println(userDateChoice);
         System.out.println(userTimeChoice);
+        // Send query to database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        // Get a reference for the "users" section
+        DatabaseReference myRef = database.getReference("events");
+        String[] matchResults = new String[5]; // Just going to take the first five results
+
+        Query eventQuery = myRef.child(userActivityChoice.toLowerCase());
+        eventQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    //Event event = singleSnapshot.getValue(Event.class); -- I got an error with this. Had to comment out to build the app - E.
+                    System.out.println("IN THE onDataChange method!");
+                    //System.out.println(event);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post Failed, log a message
+                Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
+            }
+        });
+
         // Connect to next activity in the sequence
         // TODO: Link correctly to Cara's Activity of options for matches
-        // Intent intent = new Intent(this, CarasLovelyActivity.class);
-        // send the above info to the intent OR send the result of the server query?
-        // where to do server query?
-        // startActivity(intent);
+        Intent intent = new Intent(this, SearchResults.class);
+        startActivity(intent);
     }
 }
 

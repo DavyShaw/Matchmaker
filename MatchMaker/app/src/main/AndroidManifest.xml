@@ -40,6 +40,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <activity
             android:name=".RegisterScreen"
             android:parentActivityName=".MainActivity" />
@@ -48,6 +49,7 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".MatchDetailsActivity" />
         <activity android:name=".CreateEvent"></activity>
+        <activity android:name=".SearchResults"></activity>
     </application>
 
 </manifest>

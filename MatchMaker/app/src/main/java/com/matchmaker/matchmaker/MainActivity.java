@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         public void onSensorChanged(SensorEvent sensorEvent) {
             // Write the accelerometer values to the TextView
             float[] values = sensorEvent.values;
-            accText.setText("x: "+values[0]+"\ny: "+values[1]+"\nz: "+values[2]);
+            //accText.setText("x: "+values[0]+"\ny: "+values[1]+"\nz: "+values[2]);
         }
 
         @Override
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         sensorMan = (SensorManager)getSystemService(SENSOR_SERVICE);
 
         // This corresponds to a TextView element in main.xml with android:id="@+id/accText"
-        accText= (TextView)findViewById(R.id.accText);
+        //accText= (TextView)findViewById(R.id.accText);
 
         // Get list of accelerometers
         list = sensorMan.getSensorList(Sensor.TYPE_ACCELEROMETER);

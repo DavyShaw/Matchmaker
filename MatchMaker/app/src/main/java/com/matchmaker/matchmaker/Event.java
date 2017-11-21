@@ -10,22 +10,18 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class Event {
 
-    public String event_name;
-    public String activity;
-    public String organiser;
     public String date;
-    public String time;
     public String location;
+    public String organiser;
+    public String time;
 
     public Event() {
         // Default constructor required for calls to DataSnapshot.getValue()
     }
 
-    public Event(String organiser, String event_name, String activity, String date,
-                 String time, String location) {
-        this.event_name = event_name;
+    public Event(String date, String location, String organiser, String time) {
+
         this.organiser = organiser;
-        this.activity = activity;
         this.date = date;
         this.time = time;
         this.location = location;

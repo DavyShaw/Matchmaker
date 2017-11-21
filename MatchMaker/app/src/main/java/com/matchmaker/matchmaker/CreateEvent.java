@@ -24,6 +24,8 @@ import android.widget.TimePicker;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
@@ -117,6 +119,7 @@ public class CreateEvent extends AppCompatActivity {
         // Check if it is a valid event by calling event down below
         addToUserDB(view); // call to update the local database
         Message.message(this, dbAdapter.getData());
+        addEventToRemoteDB(view); // add event to firebase
     }
 
     // Method to add match to user DB
@@ -152,6 +155,36 @@ public class CreateEvent extends AppCompatActivity {
     // Method to add match to firebase database
     public void addToFirebase(View view){
 
+    }
+
+    public void addEventToRemoteDB(View view) {
+        //############### Storing Data Remotely in Firebase ####################
+        // Add the user to the Users Info Table in the Firebase Database
+
+        // Get an instance of the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        // Get a reference for the "users" section
+        DatabaseReference myRef = database.getReference("events");
+
+        // Get the data needed to create the object
+        // This is a bit repetitive of Emma's code - could refactor to make it more efficient if time
+        EditText event = (EditText) findViewById(R.id.eventName);
+        EditText time = (EditText) findViewById(R.id.time);
+        EditText date = (EditText) findViewById(R.id.date);
+        EditText location = (EditText) findViewById(R.id.location); // This may be changed to something else
+
+        String eventName = event.getText().toString();
+        String eventTime = time.getText().toString();
+        String eventDate = date.getText().toString();
+        // For the moment Location is a string not a gps coordinate
+        String eventLocation = location.getText().toString();
+        // How to get the organiser? Current logged in user?
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        String eventOrganiser = firebaseUser.getEmail().toString();
+
+        // Create an Event object and push that to the database
+        Event newEvent = new Event(eventDate, eventLocation, eventOrganiser, eventTime);
+        myRef.child(userActivityChoice.toLowerCase()).child(eventName).setValue(newEvent);
     }
 }
 

@@ -44,9 +44,28 @@
         <activity
             android:name=".ProfileActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".MatchDetailsActivity" />
-        <activity android:name=".CreateEvent"></activity>
-        <activity android:name=".SearchResults"></activity>
+
+        <activity
+            android:name=".MatchDetailsActivity"
+            android:parentActivityName=".SearchResults">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SearchResults" />
+        </activity>
+        <activity
+            android:name=".CreateEvent"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".SearchResults"
+            android:parentActivityName=".MatchPreferencesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MatchPreferencesActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -98,6 +98,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Method to bring the user to the create activity screen - will be removed when results page finalised
+    public void proceedToCreate(View view) {
+        // Create new intent to link button click to activity
+        Intent intent = new Intent(this, CreateEvent.class);
+        startActivity(intent);
+    }
+
 
     /** Called when the user taps the send button
      * Note the necessary requirements in order for this method
@@ -110,5 +117,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MatchPreferencesActivity.class);
         startActivity(intent);
     }
-
 }

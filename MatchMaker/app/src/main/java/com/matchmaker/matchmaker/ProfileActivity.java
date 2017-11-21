@@ -1,7 +1,7 @@
 package com.matchmaker.matchmaker;
 /**************************************************************************************************
 Profile Activity
-Authors: Emma Byrne, Davy Shaw
+Authors: Emma Byrne, Davy Shaw, Pamela Kelly
 Date: 06/11/2017
 Course: COMP 41690 Android Programming
 Desc:
@@ -45,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         dbAdapter = new myDbAdapter(this);
-        EditText nickname = (EditText) findViewById(R.id.nickname);
+        //EditText nickname = (EditText) findViewById(R.id.nickname);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -72,26 +72,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             textView.setText(data);
         }
 
-        //String[] accountName = email.split("\\@"); // to use the bit before the @ sign as username
-        //String userName = accountName[0].toString();
-
-        //String[] accountName = email.split("\\@");
-        //long id = dbAdapter.insertData(accountName[0].toString(), "helloworld");
-        //long id = dbAdapter.insertData(email, "");
-        //System.out.println("The user is " + userName);
-        //String data = dbAdapter.getSingleData(email);
-        //String data = dbAdapter.getSingleData(userName);
-//        System.out.println("The data is " + data);
-//        if (data == ""){
-//            userName = email;
-//            data = dbAdapter.getSingleData(userName);
-//        }
-
-        // query the db, if no info is present, display a message
-        // else show the data
-
-
         buttonLogout.setOnClickListener(this);
+        //Message.message(this, dbAdapter.getData());
     }
 
     @Override
@@ -109,53 +91,55 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         // if it isn't, create a db and populate it with the info given
         // if it is, call the update method to update the db
         FirebaseUser user = firebaseAuth.getCurrentUser();
+        String[] accountName = user.getEmail().split("\\@"); // - accountName[0].toString() = name before @ sign
         String data = dbAdapter.getSingleData(user.getEmail());
-
 
         // Get the information
         EditText nickname = (EditText) findViewById(R.id.nickname); // username
         String username = nickname.getText().toString();
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.boxes); // get the preferences
-        System.out.println("the child count is " + layout.getChildCount());
         StringBuilder preferences = new StringBuilder();
 
         // Idea for how to get the checked checkboxes adapted from https://stackoverflow.com/questions/39438950/get-all-child-views-inside-linear-layout
-        for (int x = 0; x< layout.getChildCount();x++) {
+        for (int x = 0; x < layout.getChildCount();x++) {
             CheckBox cb = (CheckBox) layout.getChildAt(x);
-            System.out.println(cb.getText());
             if (cb.isChecked()) {
-                System.out.println("This checkbox is checked");
                 // Add each checked one to a string
-                preferences.append(cb.getText() + "  "); // two spaces here to separate the values
+                preferences.append(cb.getText() + ", ");
             }
         }
-        System.out.println("\n\n The string is " + preferences + "\n\n");
+        String pref = preferences.toString();
+        // Remove trailing comma in the string - https://stackoverflow.com/questions/9292940/how-to-remove-comma-if-string-having-comma-at-end
+        pref = pref.replaceAll(", $", "");
 
-        if (dbAdapter.getData() == null) {
+        // If there is no data in the database, create a new database
+        if (dbAdapter.getData() == "") {
             dbAdapter = new myDbAdapter(this);
-            System.out.println("The database was created");
             // insert the data - ask for name first
             if(username.isEmpty()){
                 Message.message(this, "Please enter a name");
             } else {
-                long id = dbAdapter.insertData(username, preferences.toString(), data);
+                // Get the user information - email
+                long id = dbAdapter.insertData(username, pref, user.getEmail(), "no_events_yet");
+                // populate the text view
+                TextView textView = (TextView) findViewById(R.id.displayData);
+                textView.setText(dbAdapter.getSingleData(user.getEmail()));
+                nickname.setText("");
             }
-
         } else {
             // update the data in the db - get current username - use that to update db
-            String[] splitted = data.split("\\s+"); // index 1 is name, index 2 is pass
+            String[] splitted = data.split("\\s+"); // index 1 is name
             if (username.isEmpty()){
-                // if no username is provided, keep the same one
+                // if no username is provided, use the name that is already there
                 username = splitted[1];
             }
-            String updatePref = preferences.toString();
-            dbAdapter.updateData(user.getEmail(), username, updatePref);
-            //dbAdapter.updateData(splitted[1], splitted[2], username, updatePref);
+            dbAdapter.updateData(user.getEmail(), username, pref);
             // update the textview
             TextView textView = (TextView) findViewById(R.id.displayData);
             textView.setText(dbAdapter.getSingleData(user.getEmail()));
             nickname.setText("");
         }
+
         //############### Storing Data Remotely in Firebase ####################
         // Add the user to the Users Info Table in the Firebase Database
 

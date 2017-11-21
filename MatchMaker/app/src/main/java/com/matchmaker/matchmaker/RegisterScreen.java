@@ -107,7 +107,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                             // add to db - name will be email
                             // parse the email to make it the username - or could just use email...
                             String[] accountName = email.split("\\@"); // - accountName[0].toString() = name before @ sign
-                            long id = dbAdapter.insertData(accountName[0].toString(), "no_preferences", email);
+                            long id = dbAdapter.insertData(accountName[0].toString(), "no_preferences", email, "no_events_yet");
                             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         }
                         else{
@@ -129,13 +129,5 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         if(view == textViewSignIn){
             startActivity(new Intent(this, LoginActivity.class));
         }
-    }
-
-
-    // Test function
-    public void proceedToAcc(View view) {
-        // Create new intent to link button click to activity
-        Intent intent = new Intent(this, userAccount.class);
-        startActivity(intent);
     }
 }

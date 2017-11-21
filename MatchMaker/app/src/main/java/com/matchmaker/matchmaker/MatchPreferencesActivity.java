@@ -139,9 +139,7 @@ public class MatchPreferencesActivity extends AppCompatActivity {
                 Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
             }
         });
-
-        // Connect to next activity in the sequence
-        // TODO: Link correctly to Cara's Activity of options for matches
+        
         Intent intent = new Intent(this, SearchResults.class);
         startActivity(intent);
     }

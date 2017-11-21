@@ -114,7 +114,6 @@ public class CreateEvent extends AppCompatActivity {
         // onclick function for create event
         // get the data from the activity
         getEventData(view);
-        //TODO: call this method when the match is created - then bring user to event screen
         //Message.message(this, "Creating match...functionality under construction");
 
         // Check if it is a valid event by calling event down below

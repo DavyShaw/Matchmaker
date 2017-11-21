@@ -16,6 +16,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -27,13 +28,16 @@ import android.widget.TimePicker;
 import android.location.*;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
     //######################### SENSORS ###########################################
     // Sensor referenced from example provided in sensorsimple practical from lectures
     SensorManager sensorMan = null;
-    TextView accText = null;
     List list;
 
     SensorEventListener sensorEventListener = new SensorEventListener() {
@@ -57,7 +61,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        // Check if user is logged in
+        myDbAdapter dbAdapter;
+        FirebaseAuth firebaseAuth;
+        // Check if user is logged in and produce appropriate xml depending
+        dbAdapter = new myDbAdapter(this); // start a db instance
+        firebaseAuth = FirebaseAuth.getInstance(); // get the info from firebase
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            // if the user is logged in - link to profile instead of login prompt
+            setContentView(R.layout.activity_main_log_in);
+        }
+        else {
+            // if the user is not logged in - should show login screen
+            setContentView(R.layout.activity_main);
+        }
 
         // Get a sensor manager instance
         sensorMan = (SensorManager)getSystemService(SENSOR_SERVICE);
@@ -102,6 +121,12 @@ public class MainActivity extends AppCompatActivity {
     public void proceedToCreate(View view) {
         // Create new intent to link button click to activity
         Intent intent = new Intent(this, CreateEvent.class);
+        startActivity(intent);
+    }
+
+    public void proceedToProfile(View view) {
+        // Create new intent to link button click to profile activity
+        Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
     }
 

@@ -32,8 +32,6 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         lvParticipants.setAdapter(aa);
     }
 
-
-
     private MatchData getMatchData() {
         MatchData md = new MatchData("football", "Wednesday 4pm", "Phoenix Park");
         md.addParticipant("Emma");

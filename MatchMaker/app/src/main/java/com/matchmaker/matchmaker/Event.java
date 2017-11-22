@@ -26,4 +26,11 @@ public class Event {
         this.time = time;
         this.location = location;
     }
+
+    public String toString() {
+        String eventStringRepresentation = new String();
+        eventStringRepresentation += this.organiser += ", " + this.date
+                + ", " + this.time + ", " + this.location;
+        return eventStringRepresentation;
+    }
 }

@@ -120,7 +120,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 Message.message(this, "Please enter a name");
             } else {
                 // Get the user information - email
-                long id = dbAdapter.insertData(username, pref, user.getEmail(), "no_events_yet");
+                long id = dbAdapter.insertData(username, pref, user.getEmail(), "");
                 // populate the text view
                 TextView textView = (TextView) findViewById(R.id.displayData);
                 textView.setText(dbAdapter.getSingleData(user.getEmail()));

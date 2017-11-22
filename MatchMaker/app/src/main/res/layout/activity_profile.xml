@@ -126,8 +126,9 @@
     <TextView
         android:id="@+id/displayData"
         android:layout_width="327dp"
-        android:layout_height="143dp"
+        android:layout_height="33dp"
         android:layout_marginTop="24dp"
+        android:autoSizeMinTextSize="24dp"
         android:text="Display user data"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         app:layout_constraintLeft_toLeftOf="parent"

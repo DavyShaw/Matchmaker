@@ -10,7 +10,7 @@ public class MatchDetailsActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_match_details);
 
         // MatchData should probably be passed as an intent from the previous screen?
         // Or maybe make an API call to the MatchMaker server here.
@@ -31,8 +31,6 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         ArrayAdapter<String> aa = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, md.getParticipants());
         lvParticipants.setAdapter(aa);
     }
-
-
 
     private MatchData getMatchData() {
         MatchData md = new MatchData("football", "Wednesday 4pm", "Phoenix Park");

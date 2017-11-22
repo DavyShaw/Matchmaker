@@ -7,17 +7,28 @@
     tools:context="com.matchmaker.matchmaker.MainActivity">
 
     <Button
-
-        android:id="@+id/button"
+        android:id="@+id/matchPrefButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="12dp"
-        android:onClick="proceedToLogin"
-        android:text="@string/action_sign_in"
-        app:layout_constraintHorizontal_bias="0.502"
+        android:onClick="sendMessage"
+        android:text="@string/button_send"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="proceedToCreate"
+        android:text="Create Event"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/matchPrefButton" />
 
     <TextView
         android:id="@+id/textView2"
@@ -43,4 +54,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/main_image" />
 
+    <Button
+        android:id="@+id/goToProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:onClick="proceedToProfile"
+        android:text="View Profile"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button6" />
+
 </android.support.constraint.ConstraintLayout>
+

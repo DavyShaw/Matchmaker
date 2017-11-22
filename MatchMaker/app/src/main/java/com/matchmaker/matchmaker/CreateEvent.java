@@ -11,6 +11,7 @@ CreateEvent
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,14 +25,15 @@ import android.widget.TimePicker;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
 public class CreateEvent extends AppCompatActivity {
     private int mYear, mMonth, mDay, mHour, mMinute;
-    private String userTimeChoice;
-    private String userDateChoice;
-    private String userActivityChoice;
+    private String userTimeChoice, userDateChoice;
+    private String eventName, eventLocation, eventTime, eventOrganiser, eventActivity, eventDate;
 
     myDbAdapter dbAdapter;
     private FirebaseAuth firebaseAuth;
@@ -60,7 +62,7 @@ public class CreateEvent extends AppCompatActivity {
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                userActivityChoice = parent.getItemAtPosition(pos).toString();
+                eventActivity = parent.getItemAtPosition(pos).toString();
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -109,31 +111,42 @@ public class CreateEvent extends AppCompatActivity {
 
     // Method to create the event
     public void createEvent(View view){
-        //TODO: call this method when the match is created - then bring user to event screen
-        // Add this match to the database on firebase and to the local db
-        // Call the functions below to do this
+        // onclick function for create event
+        // get the data from the activity
+        getEventData(view);
         //Message.message(this, "Creating match...functionality under construction");
 
         // Check if it is a valid event by calling event down below
         addToUserDB(view); // call to update the local database
         Message.message(this, dbAdapter.getData());
+        addEventToRemoteDB(view); // add event to firebase
+
+        // store data in array to pass to send with intent
+        String[] matchDetails = {eventName, eventDate, eventLocation, eventOrganiser, eventTime};
+
+        // redirect to event details page
+        Intent intent = new Intent(this, MatchDetailsActivity.class);
+        intent.putExtra("matchDetails", matchDetails);
+        startActivity(intent);
     }
 
-    // Method to add match to user DB
-    // Do checks to make sure the form fields are filled out correctly
-    public void addToUserDB(View view){
-        // get info and add to database
-        // Add match name and date?
+    public void getEventData(View view) {
+        // get info for adding to the two databases
+
         EditText event = (EditText) findViewById(R.id.eventName);
         EditText time = (EditText) findViewById(R.id.time);
         EditText date = (EditText) findViewById(R.id.date);
         EditText location = (EditText) findViewById(R.id.location); // This may be changed to something else
 
-        String eventName = event.getText().toString();
-        String eventTime = time.getText().toString();
-        String eventDate = date.getText().toString();
+        eventName = event.getText().toString();
+        eventTime = time.getText().toString();
+        eventDate = date.getText().toString();
+    }
 
-        // Create string out of these values
+    // Method to add match to user DB
+    // Do checks to make sure the form fields are filled out correctly
+    public void addToUserDB(View view){
+        // get use details
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String email  = user.getEmail(); // get the users' email to pass into updateEvents
         String oldEvent = dbAdapter.getEventData(email);
@@ -152,6 +165,24 @@ public class CreateEvent extends AppCompatActivity {
     // Method to add match to firebase database
     public void addToFirebase(View view){
 
+    }
+
+    public void addEventToRemoteDB(View view) {
+        //############### Storing Data Remotely in Firebase ####################
+        // Add the user to the Users Info Table in the Firebase Database
+
+        // Get an instance of the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        // Get a reference for the "users" section
+        DatabaseReference myRef = database.getReference("events");
+
+        // How to get the organiser? Current logged in user?
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        String eventOrganiser = firebaseUser.getEmail().toString();
+
+        // Create an Event object and push that to the database
+        Event newEvent = new Event(eventDate, eventLocation, eventOrganiser, eventTime);
+        myRef.child(eventActivity.toLowerCase()).child(eventName).setValue(newEvent);
     }
 }
 

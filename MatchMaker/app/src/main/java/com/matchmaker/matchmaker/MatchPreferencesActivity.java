@@ -33,6 +33,7 @@ public class MatchPreferencesActivity extends AppCompatActivity {
     private String userTimeChoice;
     private String userDateChoice;
     private String userActivityChoice;
+    private int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,25 +112,21 @@ public class MatchPreferencesActivity extends AppCompatActivity {
     }
 
     public void sendPreferences(View view) {
-        // Do something with match preferences - send query to server for matches which
-        // align with these preferences
-        System.out.println(userActivityChoice);
-        System.out.println(userDateChoice);
-        System.out.println(userTimeChoice);
-        // Send query to database
+        //################### Get Data from Firebase ############################
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        // Get a reference for the "users" section
         DatabaseReference myRef = database.getReference("events");
-        String[] matchResults = new String[5]; // Just going to take the first five results
-
+        final Event[] matchResults = new Event[5]; // Just going to take the first five results
         Query eventQuery = myRef.child(userActivityChoice.toLowerCase());
         eventQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-                    //Event event = singleSnapshot.getValue(Event.class); -- I got an error with this. Had to comment out to build the app - E.
-                    System.out.println("IN THE onDataChange method!");
-                    //System.out.println(event);
+                    Event event = singleSnapshot.getValue(Event.class);
+                    matchResults[count] = event;
+                    count += 1;
+                    if (count >= 5) {
+                        break;
+                    }
                 }
             }
 
@@ -139,10 +136,9 @@ public class MatchPreferencesActivity extends AppCompatActivity {
                 Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
             }
         });
-
-        // Connect to next activity in the sequence
-        // TODO: Link correctly to Cara's Activity of options for matches
+        
         Intent intent = new Intent(this, SearchResults.class);
+        intent.putExtra("matchResults", matchResults);
         startActivity(intent);
     }
 }

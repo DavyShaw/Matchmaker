@@ -2,6 +2,7 @@ package com.matchmaker.matchmaker;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.*;
 
 
@@ -41,14 +42,12 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         ArrayAdapter<String> aa = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, sampleParticipants);
         lvParticipants.setAdapter(aa);
     }
-
-    private MatchData getMatchData() {
-        MatchData md = new MatchData("football", "Wednesday 4pm", "Phoenix Park");
-        md.addParticipant("Emma");
-        md.addParticipant("Pam");
-        md.addParticipant("Cara");
-        md.addParticipant("Andy");
-        md.addParticipant("Davey");
-        return md;
+    //https://stackoverflow.com/questions/6554317/savedinstancestate-is-always-null
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()== android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

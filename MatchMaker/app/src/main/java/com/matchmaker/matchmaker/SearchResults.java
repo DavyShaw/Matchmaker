@@ -23,20 +23,18 @@ import java.util.concurrent.Semaphore;
 public class SearchResults extends AppCompatActivity {
     String[] matchResults = new String[5];
     String stringResults;
-
+    String userActivityChoice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // get extra data sent with intent creation
         Bundle extras = getIntent().getExtras();
         stringResults = extras.getString("userPreferences");
+        userActivityChoice = extras.getString("Activity");
         //String userDateChoice = extras.getString("datePref");
         //String userTimeChoice = extras.getString("timePref");
 
         // Get the match results
-
-        System.out.println("HELLO");
         String[] arrayResults = stringResults.split("!");
-        System.out.println(arrayResults.length);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
@@ -44,16 +42,14 @@ public class SearchResults extends AppCompatActivity {
         ArrayAdapter<String> eventsAdapter = new ArrayAdapter<String>(SearchResults.this,
                 android.R.layout.simple_list_item_1, arrayResults);
 
-        // was using getResources().getStringArray(R.array.dummyList)
-
-        System.out.println("Did we get this far!? ");
         final ListView resultsListView = (ListView) findViewById(R.id.resultsListView);
 
         resultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(SearchResults.this, MatchDetailsActivity.class);
-                intent.putExtra("Match Title", resultsListView.getItemAtPosition(i).toString());
+                intent.putExtra("Activity", userActivityChoice);
+                intent.putExtra("Match Details", resultsListView.getItemAtPosition(i).toString());
                 startActivity(intent);
             }
         });

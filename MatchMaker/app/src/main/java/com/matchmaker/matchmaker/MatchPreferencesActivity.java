@@ -152,6 +152,7 @@ public class MatchPreferencesActivity extends AppCompatActivity {
                     }
                     String userPrefs = userPreferences.toString();
                     Intent intent = new Intent(getBaseContext(), SearchResults.class);
+                    intent.putExtra("Activity", userActivityChoice);
                     intent.putExtra("userPreferences", userPrefs);
                     startActivity(intent);
                 }

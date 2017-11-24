@@ -1,9 +1,11 @@
 package com.matchmaker.matchmaker;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,13 +34,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.Calendar;
+import java.util.Map;
 
 public class MatchPreferencesActivity extends AppCompatActivity {
     private int mYear, mMonth, mDay, mHour, mMinute;
     private String userTimeChoice;
     private String userDateChoice;
     private String userActivityChoice;
-    private int count;
+    String[] matchResults = new String[5];
+    StringBuilder userPreferences = new StringBuilder();
+    int count = 0;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +79,6 @@ public class MatchPreferencesActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     //##################################### Time Picker Set Up #################################
     // reference: https://www.journaldev.com/9976/android-date-time-picker-dialog
@@ -112,21 +121,40 @@ public class MatchPreferencesActivity extends AppCompatActivity {
     }
 
     public void sendPreferences(View view) {
+        getMatches();
+        System.out.println("Called getMatches()");
+    }
+
+    public void getMatches() {
+        // Method to get the data from Firebase
         //################### Get Data from Firebase ############################
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("events");
-        final Event[] matchResults = new Event[5]; // Just going to take the first five results
         Query eventQuery = myRef.child(userActivityChoice.toLowerCase());
         eventQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     Event event = singleSnapshot.getValue(Event.class);
-                    matchResults[count] = event;
+                    String eventString = event.toString();
+                    matchResults[count] = eventString;
                     count += 1;
+                    // Doesn't always get to 5!
                     if (count >= 5) {
                         break;
                     }
+                    for (String match : matchResults) {
+                        if (match != null) {
+                            userPreferences.append(match);
+                            userPreferences.append("!");
+                        }
+                    }
+                    String userPrefs = userPreferences.toString();
+                    Intent intent = new Intent(getBaseContext(), SearchResults.class);
+                    intent.putExtra("Activity", userActivityChoice);
+                    intent.putExtra("userPreferences", userPrefs);
+                    startActivity(intent);
                 }
             }
 
@@ -135,12 +163,12 @@ public class MatchPreferencesActivity extends AppCompatActivity {
                 // Getting Post Failed, log a message
                 Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
             }
+
+
         });
-        
-        Intent intent = new Intent(this, SearchResults.class);
-        intent.putExtra("matchResults", matchResults);
-        startActivity(intent);
+
     }
-}
+    }
+
 
 

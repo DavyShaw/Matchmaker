@@ -37,6 +37,8 @@ import java.util.Calendar;
 import java.util.Map;
 
 public class MatchPreferencesActivity extends AppCompatActivity {
+    private static String TAG = "MatchPreferencesActivity";
+
     private int mYear, mMonth, mDay, mHour, mMinute;
     private String userTimeChoice;
     private String userDateChoice;
@@ -137,6 +139,7 @@ public class MatchPreferencesActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     Event event = singleSnapshot.getValue(Event.class);
+                    Log.d(TAG, event.toString());
                     String eventString = event.toString();
                     matchResults[count] = eventString;
                     count += 1;

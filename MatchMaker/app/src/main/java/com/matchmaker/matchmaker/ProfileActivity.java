@@ -14,6 +14,7 @@ Usage:
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,8 +29,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import java.util.Arrays;
 
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
@@ -163,6 +168,53 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         // if you want to split by . you have to escape it because . in regex means any character
         myEmail = myEmail.split("\\.")[0];
         myRef.child(myEmail).setValue(myMap);
+    }
+
+
+    public void test(View view){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String email  = user.getEmail(); // get the users' email to pass into updateEvents
+        String oldEvent = dbAdapter.getEventData(email);
+        myDbAdapter dbAdapter;
+        dbAdapter = new myDbAdapter(this);
+        String data = dbAdapter.getEventData(email);
+        //System.out.print("The other stuff " + data);
+        Message.message(this,data);
+        String lines[] = data.split(",");
+        System.out.println("The stuff is " + Arrays.toString(lines));
+        String i = data.replace("\n", ",");
+        List<String> arrayList = new ArrayList<String>();
+        System.out.println("i " + i);
+        String[] arr = i.split(",");
+        System.out.println("i split" + Arrays.toString(arr));
+
+
+        //System.out.println("the index is " + i["TestEvent"]);
+        // https://stackoverflow.com/questions/18179701/how-to-find-index-of-int-array-which-match-specific-value
+        System.out.println(Arrays.asList(arr).indexOf("TestEvent"));
+        int t = Arrays.asList(arr).indexOf("TestEvent");
+        System.out.println(arr[t] + " " + arr[t + 2]);
+        // Iterate through the array at these values, then remove the values and turn the array back into a string
+        // Remove leading and trailing commas as well
+        arrayList.remove(arr[t]);
+
+        //String lines[] = data.split(",");
+        // then get 2 after this
+
+        //System.out.println("The substring is " + data.substring(ev, ev+2));
+
+
+//        for (int i = 0; i < lines.length; i++) {
+//            System.out.print(lines[i]);
+//        }
+
+        //System.out.print(Arrays.toString(lines));
+        // Parse the event data
+        //String[] test = data.split("\n");
+//        String lines[] = data.split("\\r?\\n");
+//        //System.out.println(test.toString());
+//        System.out.println("The stuff is " + lines.toString());
+//        System.out.println("The other stuff " + data);
     }
 }
 

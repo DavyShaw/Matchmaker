@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     SensorManager sensorMan = null;
     List list;
 
+    myDbAdapter dbAdapter;
+    private FirebaseAuth firebaseAuth;
+
     SensorEventListener sensorEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent sensorEvent) {

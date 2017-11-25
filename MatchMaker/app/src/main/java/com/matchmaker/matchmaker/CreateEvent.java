@@ -140,7 +140,6 @@ public class CreateEvent extends AppCompatActivity {
 
     public void getEventData(View view) {
         // get info for adding to the two databases
-
         EditText event = (EditText) findViewById(R.id.eventName);
         EditText time = (EditText) findViewById(R.id.time);
         EditText date = (EditText) findViewById(R.id.date);

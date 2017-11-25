@@ -37,12 +37,10 @@ public class SearchResults extends AppCompatActivity {
         // get extra data sent with intent creation
         // Check whether we're recreating a previously destroyed instance
         if (savedInstanceState != null) {
-            System.out.println("IN THE IF Saved instance state is not equal to null");
             userActivityChoice = savedInstanceState.getString("userActivityChoice");
             stringResults = savedInstanceState.getString("stringResults");
             arrayResults = savedInstanceState.getStringArray("arrayResults");
         } else {
-            System.out.println("IN THE ELSE - instance state must be equal to null");
             // Probably initialize members with default values for a new instance
             Bundle extras = savedInstanceState != null ? savedInstanceState : getIntent().getExtras();
             stringResults = extras.getString("userPreferences");

@@ -1,0 +1,36 @@
+Notes: 
+--------------
+
+Pamela:
+---------------
+
+- Storing user data in remote firebase database
+- Reading from firebase for match preferences. 
+
+Cara:
+--------------
+
+- Integrating code - search results page with Pam's search page
+- Garbage collection error - markSweep, emulator stopped... 
+- Literature research
+
+Andy: 
+--------------
+
+- Integrated code for event details activity into dev branch
+- Started on weather - Stuck at HTTP UrlConnectionError
+
+Emma:
+--------------
+
+- Made the match event creation activity
+- Updated the local database to store the user's events
+- Implemented the required formatting for the report. 
+
+Davy:
+-------------
+
+- Temporary event details page 
+- Connects to google calendar
+- connects to event navigation page
+- Location sensor stuff almost working. 

@@ -145,6 +145,7 @@ public class MatchPreferencesActivity extends AppCompatActivity {
                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     Event event = singleSnapshot.getValue(Event.class);
                     event.setEventName(singleSnapshot.getKey());
+                    event.setCategory(userActivityChoice);
                     //events.put(event.getEventName(), event);
                     events.add(event);
                     Log.d(TAG, "EVENT="+event.toDebugString());

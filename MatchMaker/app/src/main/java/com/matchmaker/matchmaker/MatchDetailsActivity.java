@@ -20,6 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class MatchDetailsActivity extends AppCompatActivity  {
     private static String TAG = "MatchDetailsActivity";
@@ -41,7 +44,7 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         Log.d(TAG, "MATCH_DETAILS=" + matchDetails);
         //TODO: SOMETIMES CRASHES HERE TRYING TO SPLIT
         String[] matchDetailsArray = matchDetails.split(",");
-        this.event = new Event(matchDetailsArray[1], matchDetailsArray[0], matchDetailsArray[2], matchDetailsArray[3]);
+        //this.event = new Event(matchDetailsArray[1], matchDetailsArray[0], matchDetailsArray[2], matchDetailsArray[3]);
         System.out.println(event.toString());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_details);
@@ -59,10 +62,11 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         TextView tvWhen = (TextView) findViewById(R.id.tvWhen);
         String when = event.date + event.time;
         tvWhen.setText(when);
-        String[] sampleParticipants = {"Pam", "Emma", "Andy", "Cara", "Davy"};
+        //String[] sampleParticipants = {"Pam", "Emma", "Andy", "Cara", "Davy"};
         // https://stackoverflow.com/questions/5070830/populating-a-listview-using-an-arraylist
         ListView lvParticipants = (ListView) findViewById(R.id.lvParticipants);
-        ArrayAdapter<String> aa = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, sampleParticipants);
+        Log.d(TAG, "PARTICPS="+this.event.getParticipants().toString());
+        ArrayAdapter<String> aa = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, this.event.getParticipantsList());
         lvParticipants.setAdapter(aa);
     }
     //https://stackoverflow.com/questions/6554317/savedinstancestate-is-always-null
@@ -78,8 +82,6 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         Log.d(TAG, "JoinedButtonClicked");
         DatabaseReference eventsDB = FirebaseDatabase.getInstance().getReference("events");
         Log.d(TAG, eventsDB.toString());
-        Bundle extras = getIntent().getExtras();
-        Log.d(TAG, extras.toString());
         joinEvent();
     }
 
@@ -94,7 +96,17 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         this.event.attend(user);
         Log.d(TAG, this.event.toDebugString());
         DatabaseReference dbEvents  = FirebaseDatabase.getInstance().getReference("events");
+        Map<String, Object> participantsMap = (Map) event.getParticipants();
 
+        Log.d(TAG, "EVENT_NAME="+event.getEventName());
+        Log.d(TAG, "UIS="+user.getUid());
+
+        dbEvents.child(event.getCategory())
+                .child(event.getEventName())
+                .child("participants")
+                .child(user.getUid()).setValue(true);
+
+        Log.d(TAG, "FIREBSAE_DB=UPDATED?");
 
     }
 }

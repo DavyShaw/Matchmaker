@@ -22,6 +22,7 @@ public class Event implements Serializable {
     public String organiser;
     public String time;
     private HashMap<String, Boolean> participants;
+    private String category;
 
     public Event() {
         // Default constructor required for calls to DataSnapshot.getValue()
@@ -33,15 +34,15 @@ public class Event implements Serializable {
         this(date, location, organiser, time, new HashMap<String, Boolean>());
     }
 
-    public Event(String eventName, String date, String location, String organiser, String time, HashMap<String, Boolean> participants) {
-        this.eventName = eventName;
-        this.organiser = organiser;
-        this.date = date;
-        this.time = time;
-        this.location = location;
-        participants.put(organiser, true);
-        this.participants = participants;
-    }
+//    public Event(String eventName, String date, String location, String organiser, String time, HashMap<String, Boolean> participants) {
+//        this.eventName = eventName;
+//        this.organiser = organiser;
+//        this.date = date;
+//        this.time = time;
+//        this.location = location;
+//        participants.put(organiser, true);
+//        this.participants = participants;
+//    }
 
     public Event(String date, String location, String organiser, String time, HashMap<String, Boolean> participants) {
         this.organiser = organiser;
@@ -55,17 +56,23 @@ public class Event implements Serializable {
     public String toString() {
         String eventStringRepresentation = new String();
         eventStringRepresentation += this.organiser += ", " + this.date
-                + ", " + this.time + ", " + this.location + ", participants: " + this.getParticipants().toString();
+                + ", " + this.time + ", " + this.location + ", participants: " + this.participants.toString();
         return eventStringRepresentation;
     }
 
+    public void setCategory(String category) {
+        //TODO: check whterh category is valid
+        this.category = category;
+    }
+    public String getCategory() { return this.category; }
 
     public String toDebugString() {
-        return "ORG: " + this.organiser
-                + ", DATE: " + this.date
-                + ", TIME: " + this.time
-                + ", LOC: " + this.location
-                + ", PARTIC: " + this.getParticipants().toString();
+        return "<< NAME: " + this.eventName + " |" +
+                "ORG: " + this.organiser + " |"
+                + " DATE: " + this.date + " |"
+                + " TIME: " + this.time + " |"
+                + " LOC: " + this.location + " |"
+                + " PARTIC: " + this.getParticipants().toString() + " >>";
     }
 
     public void attend(String user) {
@@ -86,8 +93,22 @@ public class Event implements Serializable {
     public void unattend(FirebaseUser user) {
         this.participants.remove(user.getEmail());
     }
+    public HashMap<String, Boolean> getParticipants() {
+        return this.participants;
+    }
+    public void setParticipants(HashMap<String, Boolean> map) {
+        this.participants = map;
+    }
 
-    public ArrayList<String> getParticipants() {
+//    public Map<String, Object> getParticipantsMap() {
+//        HashMap<String, Object> result = new HashMap<>();
+//        for (Map.Entry<String, Boolean> entry : this.participants.entrySet())
+//            result.put(entry.getKey(), (Object) entry.getValue());
+//
+//        return (Map<String, Object>) result;
+//    }
+
+    public ArrayList<String> getParticipantsList() {
         ArrayList<String> result = new ArrayList<>();
         for (Map.Entry<String, Boolean> entry : this.participants.entrySet())
             result.add(entry.getKey());

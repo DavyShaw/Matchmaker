@@ -94,7 +94,7 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         if (isUserInEvent(view)) {
             Message.message(this, "You are already part of this event.");
         } else {
-            addToUserDB(view, event.getEventName(), event.time, event.date);
+            //addToUserDB(view, event.getEventName(), event.time, event.date);
             Message.message(this, "Successfully added to event");
         }
     }
@@ -109,11 +109,11 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         Log.d(TAG, this.event.toDebugString());
         this.event.attend(user);
         Log.d(TAG, this.event.toDebugString());
-        DatabaseReference dbEvents  = FirebaseDatabase.getInstance().getReference("events");
+        DatabaseReference dbEvents = FirebaseDatabase.getInstance().getReference("events");
         Map<String, Object> participantsMap = (Map) event.getParticipants();
 
-        Log.d(TAG, "EVENT_NAME="+event.getEventName());
-        Log.d(TAG, "UIS="+user.getUid());
+        Log.d(TAG, "EVENT_NAME=" + event.getEventName());
+        Log.d(TAG, "UIS=" + user.getUid());
 
         dbEvents.child(event.getCategory())
                 .child(event.getEventName())
@@ -121,6 +121,7 @@ public class MatchDetailsActivity extends AppCompatActivity  {
                 .child(user.getUid()).setValue(true);
 
         Log.d(TAG, "FIREBSAE_DB=UPDATED?");
+    }
     // Method to add the current user to the local database - called when user joins the event
     public void addToUserDB(View view, String eventName, String eventTime, String eventDate){
         // get user details

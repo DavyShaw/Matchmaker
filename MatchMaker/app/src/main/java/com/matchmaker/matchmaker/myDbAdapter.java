@@ -57,6 +57,23 @@ public class myDbAdapter {
         return buffer.toString();
     }
 
+    public String getSingleData_NoEvents(String email){
+        SQLiteDatabase db = dbAdapter.getWritableDatabase();
+        String[] columns = {myDbHelper.UID,myDbHelper.NAME,myDbHelper.MyPREFERENCES,myDbHelper.EMAIL};
+        String query = "SELECT * FROM " +myDbHelper.TABLE_NAME + " WHERE " + myDbHelper.EMAIL + " = '" + email + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        StringBuffer buffer= new StringBuffer();
+        if (cursor.moveToFirst()) {
+            do {
+                //int cid = cursor.getInt(cursor.getColumnIndex(myDbHelper.UID));
+                String name = cursor.getString(cursor.getColumnIndex(myDbHelper.NAME));
+                String preferences = cursor.getString(cursor.getColumnIndex(myDbHelper.MyPREFERENCES));
+                buffer.append("Name: " + name + "\nPreferences: " + preferences + "\nEmail: " + email + " \n");
+            } while (cursor.moveToNext());
+        }
+        return buffer.toString();
+    }
+
     public String getEventData(String email) {
         SQLiteDatabase db = dbAdapter.getWritableDatabase();
         String[] columns = {myDbHelper.UID,myDbHelper.NAME,myDbHelper.MyPREFERENCES,myDbHelper.EMAIL};
@@ -74,7 +91,6 @@ public class myDbAdapter {
 
     // This gets all the data in the database and returns it as a string
     public String getData() {
-        System.out.println("\n\n\nIn the get data method\n\n\n");
         SQLiteDatabase db = dbAdapter.getWritableDatabase();
         String[] columns = {myDbHelper.UID,myDbHelper.NAME,myDbHelper.MyPREFERENCES,myDbHelper.MyEVENTS,myDbHelper.EMAIL};
         Cursor cursor =db.query(myDbHelper.TABLE_NAME,columns,null,null,null,null,null);

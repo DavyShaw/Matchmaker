@@ -113,32 +113,30 @@ public class CreateEvent extends AppCompatActivity {
     public void createEvent(View view){
         // onclick function for create event
         // get the data from the activity
-        getEventData(view);
-        //Message.message(this, "Creating match...functionality under construction");
+        // first check that all the things are filled in
+        if (getEventData(view)) {
+            addToUserDB(view); // call to update the local database
+            addEventToRemoteDB(view); // add event to firebase
 
-        // Check if it is a valid event by calling event down below
-        addToUserDB(view); // call to update the local database
-        Message.message(this, dbAdapter.getData());
-        addEventToRemoteDB(view); // add event to firebase
-
-        // store data in array to pass to send with intent
-        String[] matchDetails = {eventOrganiser, eventDate, eventTime, eventLocation};
-        StringBuilder stringDetails = new StringBuilder();
-        for (String match : matchDetails) {
-            stringDetails.append(match);
-            stringDetails.append(",");
+            // store data in array to pass to send with intent
+            String[] matchDetails = {eventOrganiser, eventDate, eventTime, eventLocation};
+            StringBuilder stringDetails = new StringBuilder();
+            for (String match : matchDetails) {
+                stringDetails.append(match);
+                stringDetails.append(",");
+            }
+            String strDetails = stringDetails.toString();
+            // redirect to event details page
+            Intent intent = new Intent(this, MatchDetailsActivity.class);
+            intent.putExtra("Activity", eventActivity);
+            intent.putExtra("Match Details", strDetails);
+            startActivity(intent);
+        } else {
+            Message.message(this, "Please make sure all the fields are filled in");
         }
-        String strDetails = stringDetails.toString();
-
-
-        // redirect to event details page
-        Intent intent = new Intent(this, MatchDetailsActivity.class);
-        intent.putExtra("Activity", eventActivity);
-        intent.putExtra("Match Details", strDetails);
-        startActivity(intent);
     }
 
-    public void getEventData(View view) {
+    public Boolean getEventData(View view) {
         // get info for adding to the two databases
         EditText event = (EditText) findViewById(R.id.eventName);
         EditText time = (EditText) findViewById(R.id.time);
@@ -148,12 +146,18 @@ public class CreateEvent extends AppCompatActivity {
         eventName = event.getText().toString();
         eventTime = time.getText().toString();
         eventDate = date.getText().toString();
+
+        if (eventName.isEmpty() || eventTime.isEmpty() || eventDate.isEmpty()){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     // Method to add match to user DB
     // Do checks to make sure the form fields are filled out correctly
     public void addToUserDB(View view){
-        // get use details
+        // get user details
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String email  = user.getEmail(); // get the users' email to pass into updateEvents
         String oldEvent = dbAdapter.getEventData(email);
@@ -161,12 +165,6 @@ public class CreateEvent extends AppCompatActivity {
         StringBuilder eventInfo = new StringBuilder();
         eventInfo.append(eventName + ", " + eventTime + ", " + eventDate);
         dbAdapter.updateEvents(email, oldEvent, eventInfo.toString());
-    }
-
-    public Boolean isValidEvent(View view) {
-        // Method to check if the event is valid - will check Firebase to see if the event has been created already
-        // If the event name is already in Firebase, return false, true otherwise
-        return true;
     }
 
     public void addEventToRemoteDB(View view) {

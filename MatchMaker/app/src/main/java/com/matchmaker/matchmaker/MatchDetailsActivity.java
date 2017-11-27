@@ -2,13 +2,24 @@ package com.matchmaker.matchmaker;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.*;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class MatchDetailsActivity extends AppCompatActivity  {
+    private static String TAG = "MatchDetailsActivity";
     String matchDetails;
     String activityUserChoice;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Bundle extras = getIntent().getExtras();
@@ -17,6 +28,8 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         activityUserChoice = extras.getString("Activity");
         matchDetails = extras.getString("Match Details");
         System.out.println("Match Details");
+        Log.d(TAG, matchDetails);
+        //TODO: SOMETIMES CRASHES HERE TRYING TO SPLIT
         String[] matchDetailsArray = matchDetails.split(",");
         Event event = new Event(matchDetailsArray[1], matchDetailsArray[0], matchDetailsArray[2], matchDetailsArray[3]);
         System.out.println(event.toString());
@@ -50,4 +63,18 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onJoinEventClick(View view) {
+        Log.d(TAG, "JoinedButtonClicked");
+        DatabaseReference eventsDB = FirebaseDatabase.getInstance().getReference("events");
+        Log.d(TAG, eventsDB.toString());
+        Bundle extras = getIntent().getExtras();
+        Log.d(TAG, extras.toString());
+    }
+
+    public void joinEvent() {
+
+    }
 }
+
+

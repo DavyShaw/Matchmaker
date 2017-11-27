@@ -122,11 +122,19 @@ public class CreateEvent extends AppCompatActivity {
         addEventToRemoteDB(view); // add event to firebase
 
         // store data in array to pass to send with intent
-        String[] matchDetails = {eventName, eventDate, eventLocation, eventOrganiser, eventTime};
+        String[] matchDetails = {eventOrganiser, eventDate, eventTime, eventLocation};
+        StringBuilder stringDetails = new StringBuilder();
+        for (String match : matchDetails) {
+            stringDetails.append(match);
+            stringDetails.append(",");
+        }
+        String strDetails = stringDetails.toString();
+
 
         // redirect to event details page
         Intent intent = new Intent(this, MatchDetailsActivity.class);
-        intent.putExtra("matchDetails", matchDetails);
+        intent.putExtra("Activity", eventActivity);
+        intent.putExtra("Match Details", strDetails);
         startActivity(intent);
     }
 
@@ -159,11 +167,6 @@ public class CreateEvent extends AppCompatActivity {
         // Method to check if the event is valid - will check Firebase to see if the event has been created already
         // If the event name is already in Firebase, return false, true otherwise
         return true;
-    }
-
-    // Method to add match to firebase database
-    public void addToFirebase(View view){
-
     }
 
     public void addEventToRemoteDB(View view) {

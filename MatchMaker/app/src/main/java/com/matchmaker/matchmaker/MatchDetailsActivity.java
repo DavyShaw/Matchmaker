@@ -7,16 +7,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+
 import com.google.firebase.database.FirebaseDatabase;
+
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
 public class MatchDetailsActivity extends AppCompatActivity  {
     private static String TAG = "MatchDetailsActivity";
+    private FirebaseAuth firebaseAuth;
+    private Event event;
+
     String matchDetails;
     String activityUserChoice;
 
@@ -27,11 +36,12 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         // TODO: Fix Location as null
         activityUserChoice = extras.getString("Activity");
         matchDetails = extras.getString("Match Details");
-        System.out.println("Match Details");
-        Log.d(TAG, matchDetails);
+        this.event = (Event) extras.getSerializable("event");
+        Log.d(TAG, "EVENT="+event.toDebugString());
+        Log.d(TAG, "MATCH_DETAILS=" + matchDetails);
         //TODO: SOMETIMES CRASHES HERE TRYING TO SPLIT
         String[] matchDetailsArray = matchDetails.split(",");
-        Event event = new Event(matchDetailsArray[1], matchDetailsArray[0], matchDetailsArray[2], matchDetailsArray[3]);
+        this.event = new Event(matchDetailsArray[1], matchDetailsArray[0], matchDetailsArray[2], matchDetailsArray[3]);
         System.out.println(event.toString());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_details);
@@ -70,9 +80,21 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         Log.d(TAG, eventsDB.toString());
         Bundle extras = getIntent().getExtras();
         Log.d(TAG, extras.toString());
+        joinEvent();
     }
 
     public void joinEvent() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Log.d(TAG, "USER NOT FOUND");
+            return;
+        }
+        Log.d(TAG, "USER EMAIL: " + user.getEmail());
+        Log.d(TAG, this.event.toDebugString());
+        this.event.attend(user);
+        Log.d(TAG, this.event.toDebugString());
+        DatabaseReference dbEvents  = FirebaseDatabase.getInstance().getReference("events");
+
 
     }
 }

@@ -33,7 +33,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Map;
 
 public class MatchPreferencesActivity extends AppCompatActivity {
@@ -137,9 +139,15 @@ public class MatchPreferencesActivity extends AppCompatActivity {
         eventQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                // HashMap<String, Event> events = new HashMap<>();
+                ArrayList<Event> events = new ArrayList<>();
                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     Event event = singleSnapshot.getValue(Event.class);
-                    Log.d(TAG, event.toString());
+                    event.setEventName(singleSnapshot.getKey());
+                    //events.put(event.getEventName(), event);
+                    events.add(event);
+                    Log.d(TAG, "EVENT="+event.toDebugString());
                     String eventString = event.toString();
                     matchResults[count] = eventString;
                     count += 1;
@@ -157,6 +165,7 @@ public class MatchPreferencesActivity extends AppCompatActivity {
                     Intent intent = new Intent(getBaseContext(), SearchResults.class);
                     intent.putExtra("Activity", userActivityChoice);
                     intent.putExtra("userPreferences", userPrefs);
+                    intent.putExtra("events", events);
                     startActivity(intent);
                 }
             }

@@ -7,8 +7,8 @@ package com.matchmaker.matchmaker;
  Authors: Emma Byrne
  Date: 05/11/2017
  Course: COMP 41690 Android Programming
- Desc:
- Usage:
+ Usage: Code to set up the local SQLite database. Methods for creating the database, retrieving
+ information from the database and inserting information to the database are all included
  **************************************************************************************************/
 
 import android.content.ContentValues;
@@ -37,9 +37,8 @@ public class myDbAdapter {
         return id;
     }
 
-    // This gets the data for a single user
+    // This gets all the data for a single user. Events and user information
     public String getSingleData(String email) {
-        // Get the user id here? - use user name for now - need to get a value from the user login
         SQLiteDatabase db = dbAdapter.getWritableDatabase();
         String[] columns = {myDbHelper.UID,myDbHelper.NAME,myDbHelper.MyPREFERENCES,myDbHelper.EMAIL};
         String query = "SELECT * FROM " +myDbHelper.TABLE_NAME + " WHERE " + myDbHelper.EMAIL + " = '" + email + "'";
@@ -57,6 +56,7 @@ public class myDbAdapter {
         return buffer.toString();
     }
 
+    // Gets the user information - name, email, preferences only. No event information retrieved
     public String getSingleData_NoEvents(String email){
         SQLiteDatabase db = dbAdapter.getWritableDatabase();
         String[] columns = {myDbHelper.UID,myDbHelper.NAME,myDbHelper.MyPREFERENCES,myDbHelper.EMAIL};
@@ -65,7 +65,6 @@ public class myDbAdapter {
         StringBuffer buffer= new StringBuffer();
         if (cursor.moveToFirst()) {
             do {
-                //int cid = cursor.getInt(cursor.getColumnIndex(myDbHelper.UID));
                 String name = cursor.getString(cursor.getColumnIndex(myDbHelper.NAME));
                 String preferences = cursor.getString(cursor.getColumnIndex(myDbHelper.MyPREFERENCES));
                 buffer.append("Name: " + name + "\nPreferences: " + preferences + "\nEmail: " + email + " \n");
@@ -74,6 +73,7 @@ public class myDbAdapter {
         return buffer.toString();
     }
 
+    // Gets the events that the user has joined/created only
     public String getEventData(String email) {
         SQLiteDatabase db = dbAdapter.getWritableDatabase();
         String[] columns = {myDbHelper.UID,myDbHelper.NAME,myDbHelper.MyPREFERENCES,myDbHelper.EMAIL};
@@ -104,11 +104,10 @@ public class myDbAdapter {
             String email = cursor.getString(cursor.getColumnIndex(myDbHelper.EMAIL));
             buffer.append(cid+ "   " + name + "   " + preferences + " " + email + " " + events + " \n");
         }
-        // maybe do a check here to return false?
         return buffer.toString();
     }
 
-    // This deletes data in the database - change this to delete events?
+    // This deletes data in the database
     public  int delete(String uname) {
         SQLiteDatabase db = dbAdapter.getWritableDatabase();
         String[] whereArgs ={uname};
@@ -128,9 +127,7 @@ public class myDbAdapter {
         return true;
     }
 
-    // Method to remove an event from the user - could use the delete method from above?
-
-    // Method to update the event info for a user - this will add an event
+    // Method to update the event info for a user - this will add an event to their database
     public Boolean updateEvents(String email, String oldEvents, String newEvents){
         // Take in the event string, add it to the db
         SQLiteDatabase db = dbAdapter.getWritableDatabase();
@@ -144,6 +141,9 @@ public class myDbAdapter {
         return true;
     }
 
+    // Defines the datbase information as well as the table in the database.
+    // Creates the columns in the table and the corresponding character types
+    // Also contains a method to upgrade the table
     static class myDbHelper extends SQLiteOpenHelper {
         private static final String DATABASE_NAME = "myDatabase";    // Database Name
         private static final String TABLE_NAME = "myTable";   // Table Name
@@ -164,6 +164,7 @@ public class myDbAdapter {
             this.context=context;
         }
 
+        // Creates the SQLite table
         public void onCreate(SQLiteDatabase db) {
             try {
                 db.execSQL(CREATE_TABLE);
@@ -172,6 +173,7 @@ public class myDbAdapter {
             }
         }
 
+        // Upgrades the database to a new version if necessary
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             try {

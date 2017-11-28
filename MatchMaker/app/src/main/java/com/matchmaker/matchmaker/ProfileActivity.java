@@ -4,37 +4,27 @@ Profile Activity
 Authors: Emma Byrne, Davy Shaw, Pamela Kelly
 Date: 06/11/2017
 Course: COMP 41690 Android Programming
-Desc:
-Usage:
-
+Usage: Activity which displays the users profile. Shows their email, their match preferences,
+ and their upcomming events. An edit button at the bottom of the screen enables the user to change
+ their nickname and activity preferences.
  **************************************************************************************************/
 
-//Part of code taken from https://www.simplifiedcoding.net/firebase-user-authentication-tutorial/
+// Part of code for firebase taken from https://www.simplifiedcoding.net/firebase-user-authentication-tutorial/
 
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Button;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -93,9 +83,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     // Method which updates the user information when they click the update button
     public void update_user_info(View view){
-        // check if the database is populated or not
-        // if it isn't, create a db and populate it with the info given
-        // if it is, call the update method to update the db
+        // Check if the database is populated or not
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String[] accountName = user.getEmail().split("\\@"); // - accountName[0].toString() = name before @ sign
         String data = dbAdapter.getSingleData(user.getEmail());
@@ -133,14 +121,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 nickname.setText("");
             }
         } else {
-            // update the data in the db - get current username - use that to update db
+            // Update the data in the db
             String[] splitted = data.split("\\s+"); // index 1 is name
             if (username.isEmpty()){
                 // if no username is provided, use the name that is already there
                 username = splitted[1];
             }
             dbAdapter.updateData(user.getEmail(), username, pref);
-            // update the textview
+            // Update the textview
             TextView textView = (TextView) findViewById(R.id.displayData);
             textView.setText(dbAdapter.getSingleData(user.getEmail()));
             nickname.setText("");

@@ -12,6 +12,14 @@ import java.util.Map;
 /**
  * Created by pamela on 18/11/17.
  */
+/**************************************************************************************************
+ - Name of activity here -
+ Authors:
+ Date:
+ Course: COMP 41690 Android Programming
+ Usage:
+ **************************************************************************************************/
+
 
 // Not sure why we need this class -  but all examples of reading data from Firebase have it...
 @IgnoreExtraProperties

@@ -5,8 +5,9 @@ CreateEvent
  Authors: Emma Byrne, Pamela Kelly
  Date: 18/11/2017
  Course: COMP 41690 Android Programming
- Desc:
- Usage:
+ Usage: Code to create an event. User selects type of sport, time, day and location and clicks
+ create match. This match gets created and it is added to the Firebase API database and the users'
+ local database.
  **************************************************************************************************/
 
 import android.app.DatePickerDialog;

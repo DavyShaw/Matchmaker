@@ -1,6 +1,12 @@
-package com.matchmaker.matchmaker; /**
- * Created by EByrn on 09/11/2017.
- */
+package com.matchmaker.matchmaker;
+
+/**************************************************************************************************
+ Message class
+ Authors: Emma Byrne
+ Date: 09/11/2017
+ Course: COMP 41690 Android Programming
+ Usage: Class which creates a Toast. Can be called from the other activities
+ **************************************************************************************************/
 
 
 import android.content.Context;

@@ -1,5 +1,14 @@
 package com.matchmaker.matchmaker;
 
+/**************************************************************************************************
+ - Name of activity here -
+ Authors:
+ Date:
+ Course: COMP 41690 Android Programming
+ Usage:
+ **************************************************************************************************/
+
+
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;

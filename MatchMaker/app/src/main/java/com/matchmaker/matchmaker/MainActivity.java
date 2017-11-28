@@ -5,9 +5,9 @@ package com.matchmaker.matchmaker;
  Authors: Emma Byrne, Pamela Kelly
  Date: 30/10/2017
  Course: COMP 41690 Android Programming
- Desc:
- Usage:
-
+ Usage: Main activity for the application. It is the first page that the user sees. If the user
+ has not logged in, they will see a prompt to login/register. If they are logged in, they will see
+ buttons to bring them to activities to create an event, search for an event or view their profile
  **************************************************************************************************/
 
 import android.content.Context;

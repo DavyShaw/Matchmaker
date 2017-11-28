@@ -1,5 +1,13 @@
 package com.matchmaker.matchmaker;
 
+/**************************************************************************************************
+ - Name of activity here -
+ Authors:
+ Date:
+ Course: COMP 41690 Android Programming
+ Usage:
+ **************************************************************************************************/
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;

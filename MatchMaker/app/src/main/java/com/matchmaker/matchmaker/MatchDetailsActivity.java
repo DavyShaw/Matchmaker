@@ -22,6 +22,7 @@ public class MatchDetailsActivity extends AppCompatActivity  {
 
     String matchDetails;
     String activityUserChoice;
+    String partics;
 
     public static String address = "";
 
@@ -30,12 +31,20 @@ public class MatchDetailsActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Bundle extras = getIntent().getExtras();
-        // Match Details - Should contain Organiser, Date, Time, Location (currently null not sure why)
-        // TODO: Fix Location as null
+        // Match Details - Should contain Organiser, Date, Time, Participants, Location
         activityUserChoice = extras.getString("Activity");
         matchDetails = extras.getString("Match Details");
-        String[] matchDetailsArray = matchDetails.split(";");
-        Event event = new Event(matchDetailsArray[1], matchDetailsArray[0], matchDetailsArray[2], matchDetailsArray[3], matchDetailsArray[4]);
+        String[] matchDetailsArray = matchDetails.split(" ");
+
+        if (matchDetailsArray[4] != ";") {
+            partics = matchDetailsArray[4];
+        } else {
+            partics = "";
+        }
+        Event event = new Event(matchDetailsArray[1], matchDetailsArray[3], matchDetailsArray[0], partics, matchDetailsArray[2]);
+        System.out.println("checking event details");
+        System.out.println(event);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_details);
 
@@ -52,9 +61,7 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         TextView tvWhen = (TextView) findViewById(R.id.tvWhen);
         String when = event.date + event.time;
         tvWhen.setText(when);
-        System.out.println(matchDetailsArray);
         String participants = matchDetailsArray[4];
-        System.out.println(participants);
         String[] participantsArray = participants.split(",");
         // https://stackoverflow.com/questions/5070830/populating-a-listview-using-an-arraylist
         ListView lvParticipants = (ListView) findViewById(R.id.lvParticipants);
@@ -62,19 +69,15 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         lvParticipants.setAdapter(aa);
 
         Geocoder coder = new Geocoder(this);
-
-        String str = tvWhen.getText().toString();
+        String str = tvWhere.getText().toString();
+        str.replace(";", "");
 
         String parts[] = str.trim().split("\\s+",2);
 
         String suffix = ", Ireland";
 
-        address = parts[1] + suffix;
-        Log.i(TAG, str);
-        Log.i(TAG, parts[0]);
-        Log.i(TAG, parts[1]);
+        address = str + suffix;
         event_location = getLocationFromAddress(coder, address);
-
         FloatingActionButton mapButton = findViewById(R.id.mapButton);
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override

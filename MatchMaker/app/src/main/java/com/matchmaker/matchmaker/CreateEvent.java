@@ -1,7 +1,7 @@
 package com.matchmaker.matchmaker;
 
 /**************************************************************************************************
-CreateEvent
+ CreateEvent
  Authors: Emma Byrne, Pamela Kelly
  Date: 18/11/2017
  Course: COMP 41690 Android Programming
@@ -30,7 +30,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
-import java.util.HashMap;
 
 public class CreateEvent extends AppCompatActivity {
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -183,8 +182,6 @@ public class CreateEvent extends AppCompatActivity {
         String eventOrganiser = firebaseUser.getEmail().toString();
 
         // Create an Event object and push that to the database
-        HashMap participants = new HashMap();
-        participants.put(eventOrganiser, true);
         Event newEvent = new Event(eventDate, eventLocation, eventOrganiser, eventTime);
         myRef.child(eventActivity.toLowerCase()).child(eventName).setValue(newEvent);
     }

@@ -161,6 +161,7 @@ public class MatchPreferencesActivity extends AppCompatActivity {
                     //events.put(event.getEventName(), event);
                     events.add(event);
                     Log.d(TAG, "EVENT="+event.toDebugString());
+                    // might be able to get rid of this
                     String eventString = event.toString();
                     matchResults[count] = eventString;
                     count += 1;

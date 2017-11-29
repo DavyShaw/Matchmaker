@@ -35,7 +35,6 @@ public class Event implements Serializable {
     public Event() {
         // Default constructor required for calls to DataSnapshot.getValue()
         //this("DefaultDate", "DefaultLocation", "DefaultOrganiser", "DefaultTime");
-        this.participants = new HashMap<String, Boolean>();
     }
 
     public Event(String date, String location, String organiser, String time) {
@@ -57,7 +56,8 @@ public class Event implements Serializable {
         this.date = date;
         this.time = time;
         this.location = location;
-        participants.put(organiser, true);
+        this.participants = new HashMap<String, Boolean>();
+        //participants.put(organiser, true);
         this.participants = participants;
     }
 
@@ -83,12 +83,15 @@ public class Event implements Serializable {
                 + " PARTIC: " + this.getParticipants().toString() + " >>";
     }
 
+    // might not need this method
     public void attend(String user) {
         this.participants.put(user, true);
     }
 
     public void attend(FirebaseUser user) {
-        this.participants.put(user.getEmail(), true);
+        String email = user.getEmail().split("\\.")[0];
+        // Firebase doesn't like dots in keys - split to be just the email up to the dot
+        this.participants.put(email, true);
     }
 
     public String getEventName() { return this.eventName;}

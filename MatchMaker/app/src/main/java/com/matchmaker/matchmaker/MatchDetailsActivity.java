@@ -46,6 +46,7 @@ public class MatchDetailsActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         dbAdapter = new myDbAdapter(this); // start a db instance
         Bundle extras = getIntent().getExtras();
+        firebaseAuth = FirebaseAuth.getInstance();
         // Match Details - Should contain Organiser, Date, Time, Location (currently null not sure why)
         // TODO: Fix Location as null
         activityUserChoice = extras.getString("Activity");
@@ -108,25 +109,31 @@ public class MatchDetailsActivity extends AppCompatActivity  {
     }
 
     public void joinEvent() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user == null) {
             Log.d(TAG, "USER NOT FOUND");
             return;
         }
         Log.d(TAG, "USER EMAIL: " + user.getEmail());
         Log.d(TAG, this.event.toDebugString());
-        this.event.attend(user);
+
+        this.event.attend(user); // one that takes firebase user
         Log.d(TAG, this.event.toDebugString());
-        DatabaseReference dbEvents = FirebaseDatabase.getInstance().getReference("events");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dbEvents = database.getReference("events");
+        //DatabaseReference dbEvents = FirebaseDatabase.getInstance().getReference("events");
         Map<String, Object> participantsMap = (Map) event.getParticipants();
 
         Log.d(TAG, "EVENT_NAME=" + event.getEventName());
         Log.d(TAG, "UIS=" + user.getUid());
-
-        dbEvents.child(event.getCategory())
+        String email = user.getEmail().split("\\.")[0];
+        System.out.println("PAM CHECKS");
+        System.out.println(event.getCategory());
+        dbEvents.child(event.getCategory().toLowerCase())
                 .child(event.getEventName())
                 .child("participants")
-                .child(user.getUid()).setValue(true);
+                .child(email).setValue(true);
 
         Log.d(TAG, "FIREBSAE_DB=UPDATED?");
     }

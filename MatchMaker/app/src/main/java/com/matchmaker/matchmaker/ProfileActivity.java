@@ -4,37 +4,28 @@ Profile Activity
 Authors: Emma Byrne, Davy Shaw, Pamela Kelly
 Date: 06/11/2017
 Course: COMP 41690 Android Programming
-Desc:
-Usage:
-
+Usage: Activity which displays the users profile. Shows their email, their match preferences,
+ and their upcomming events. An edit button at the bottom of the screen enables the user to change
+ their nickname and activity preferences.
  **************************************************************************************************/
 
-//Part of code taken from https://www.simplifiedcoding.net/firebase-user-authentication-tutorial/
+// Part of code for firebase taken from https://www.simplifiedcoding.net/firebase-user-authentication-tutorial/
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Button;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import java.util.Arrays;
 
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
@@ -50,8 +41,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         dbAdapter = new myDbAdapter(this);
-        //EditText nickname = (EditText) findViewById(R.id.nickname);
-
         firebaseAuth = FirebaseAuth.getInstance();
 
         if(firebaseAuth.getCurrentUser() == null){
@@ -63,12 +52,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         textViewUserEmail = (TextView) findViewById(R.id.textviewUserEmail);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
-
-        textViewUserEmail.setText("Welcome "+user.getEmail());
+        textViewUserEmail.setText("Welcome "+user.getEmail()+"!");
 
         // Get the info for the user that is stored in the database
         String email  = user.getEmail();
-        String data = dbAdapter.getSingleData(email);
+        //String data = dbAdapter.getSingleData(email);
+        String data = dbAdapter.getSingleData_NoEvents(email);
         TextView textView = (TextView) findViewById(R.id.displayData);
 
         if (data == "") {
@@ -77,8 +66,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             textView.setText(data);
         }
 
+        TextView eventsView = (TextView) findViewById(R.id.displayEvents);
+        String eventData = dbAdapter.getEventData(email);
+        eventsView.setText(eventData);
         buttonLogout.setOnClickListener(this);
-        //Message.message(this, dbAdapter.getData());
     }
 
     @Override
@@ -92,9 +83,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     // Method which updates the user information when they click the update button
     public void update_user_info(View view){
-        // check if the database is populated or not
-        // if it isn't, create a db and populate it with the info given
-        // if it is, call the update method to update the db
+        // Check if the database is populated or not
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String[] accountName = user.getEmail().split("\\@"); // - accountName[0].toString() = name before @ sign
         String data = dbAdapter.getSingleData(user.getEmail());
@@ -132,14 +121,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 nickname.setText("");
             }
         } else {
-            // update the data in the db - get current username - use that to update db
+            // Update the data in the db
             String[] splitted = data.split("\\s+"); // index 1 is name
             if (username.isEmpty()){
                 // if no username is provided, use the name that is already there
                 username = splitted[1];
             }
             dbAdapter.updateData(user.getEmail(), username, pref);
-            // update the textview
+            // Update the textview
             TextView textView = (TextView) findViewById(R.id.displayData);
             textView.setText(dbAdapter.getSingleData(user.getEmail()));
             nickname.setText("");
@@ -170,51 +159,34 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         myRef.child(myEmail).setValue(myMap);
     }
 
-
-    public void test(View view){
+    // Populates the textview to display the user data
+    public void setTextView_userData(View view){
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        String email  = user.getEmail(); // get the users' email to pass into updateEvents
-        String oldEvent = dbAdapter.getEventData(email);
-        myDbAdapter dbAdapter;
-        dbAdapter = new myDbAdapter(this);
-        String data = dbAdapter.getEventData(email);
-        //System.out.print("The other stuff " + data);
-        Message.message(this,data);
-        String lines[] = data.split(",");
-        System.out.println("The stuff is " + Arrays.toString(lines));
-        String i = data.replace("\n", ",");
-        List<String> arrayList = new ArrayList<String>();
-        System.out.println("i " + i);
-        String[] arr = i.split(",");
-        System.out.println("i split" + Arrays.toString(arr));
+        textViewUserEmail = (TextView) findViewById(R.id.textviewUserEmail);
+        textViewUserEmail.setText("Welcome "+user.getEmail());
+        // click edit, change the xml file, in the other page, when they click done, bring back to main page with info updated
+        String email  = user.getEmail();
+        String data = dbAdapter.getSingleData_NoEvents(email);
+        TextView textView = (TextView) findViewById(R.id.displayData);
+        if (data == "") {
+            textView.setText("Please update your information below");
+        } else {
+            textView.setText(data);
+        }
+    }
 
+    public void go_to_edit(View view){
+        setContentView(R.layout.activity_profile_edit);
+        setTextView_userData(view);
+    }
 
-        //System.out.println("the index is " + i["TestEvent"]);
-        // https://stackoverflow.com/questions/18179701/how-to-find-index-of-int-array-which-match-specific-value
-        System.out.println(Arrays.asList(arr).indexOf("TestEvent"));
-        int t = Arrays.asList(arr).indexOf("TestEvent");
-        System.out.println(arr[t] + " " + arr[t + 2]);
-        // Iterate through the array at these values, then remove the values and turn the array back into a string
-        // Remove leading and trailing commas as well
-        arrayList.remove(arr[t]);
-
-        //String lines[] = data.split(",");
-        // then get 2 after this
-
-        //System.out.println("The substring is " + data.substring(ev, ev+2));
-
-
-//        for (int i = 0; i < lines.length; i++) {
-//            System.out.print(lines[i]);
-//        }
-
-        //System.out.print(Arrays.toString(lines));
-        // Parse the event data
-        //String[] test = data.split("\n");
-//        String lines[] = data.split("\\r?\\n");
-//        //System.out.println(test.toString());
-//        System.out.println("The stuff is " + lines.toString());
-//        System.out.println("The other stuff " + data);
+    public void back_to_profile(View view){
+        setContentView(R.layout.activity_profile);
+        setTextView_userData(view);
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        TextView eventsView = (TextView) findViewById(R.id.displayEvents);
+        String eventData = dbAdapter.getEventData(user.getEmail());
+        eventsView.setText(eventData);
     }
 }
 

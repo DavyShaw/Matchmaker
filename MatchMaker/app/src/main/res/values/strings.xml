@@ -98,4 +98,9 @@
         <item>Wednesday Football</item>
         <item>Sunday Rugby</item>
     </string-array>
+
+    <string name="current_info">Your current information is displayed below</string>
+    <string name="back_to_profile">Back to Profile</string>
+    <string name="update_info">Update Info</string>
+    <string name="upcomming_events">Your upcomming events are:</string>
 </resources>

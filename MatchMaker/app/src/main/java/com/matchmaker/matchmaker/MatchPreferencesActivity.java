@@ -138,6 +138,9 @@ public class MatchPreferencesActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    String eventName = singleSnapshot.getKey();
+                    System.out.println("KEY");
+                    System.out.println(eventName);
                     Event event = singleSnapshot.getValue(Event.class);
                     Log.d(TAG, event.toString());
                     String eventString = event.toString();
@@ -154,6 +157,7 @@ public class MatchPreferencesActivity extends AppCompatActivity {
                         }
                     }
                     String userPrefs = userPreferences.toString();
+                    System.out.println(userPrefs); // doesn't include name of the match
                     Intent intent = new Intent(getBaseContext(), SearchResults.class);
                     intent.putExtra("Activity", userActivityChoice);
                     intent.putExtra("userPreferences", userPrefs);

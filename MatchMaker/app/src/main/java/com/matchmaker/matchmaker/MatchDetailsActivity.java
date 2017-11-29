@@ -16,10 +16,8 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         // TODO: Fix Location as null
         activityUserChoice = extras.getString("Activity");
         matchDetails = extras.getString("Match Details");
-        System.out.println("Match Details");
-        String[] matchDetailsArray = matchDetails.split(",");
-        Event event = new Event(matchDetailsArray[1], matchDetailsArray[0], matchDetailsArray[2], matchDetailsArray[3]);
-        System.out.println(event.toString());
+        String[] matchDetailsArray = matchDetails.split(";");
+        Event event = new Event(matchDetailsArray[1], matchDetailsArray[0], matchDetailsArray[2], matchDetailsArray[3], matchDetailsArray[4]);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_details);
 
@@ -36,10 +34,13 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         TextView tvWhen = (TextView) findViewById(R.id.tvWhen);
         String when = event.date + event.time;
         tvWhen.setText(when);
-        String[] sampleParticipants = {"Pam", "Emma", "Andy", "Cara", "Davy"};
+        System.out.println(matchDetailsArray);
+        String participants = matchDetailsArray[4];
+        System.out.println(participants);
+        String[] participantsArray = participants.split(",");
         // https://stackoverflow.com/questions/5070830/populating-a-listview-using-an-arraylist
         ListView lvParticipants = (ListView) findViewById(R.id.lvParticipants);
-        ArrayAdapter<String> aa = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, sampleParticipants);
+        ArrayAdapter<String> aa = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, participantsArray);
         lvParticipants.setAdapter(aa);
     }
     //https://stackoverflow.com/questions/6554317/savedinstancestate-is-always-null

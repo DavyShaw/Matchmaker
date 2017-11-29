@@ -121,16 +121,13 @@ public class CreateEvent extends AppCompatActivity {
 
             // store data in array to pass to send with intent
             String[] matchDetails = {eventOrganiser, eventDate, eventTime, eventLocation};
-            StringBuilder stringDetails = new StringBuilder();
-            for (String match : matchDetails) {
-                stringDetails.append(match);
-                stringDetails.append(",");
-            }
-            String strDetails = stringDetails.toString();
+            Event eventDetails = new Event(eventDate, eventLocation, eventOrganiser, eventOrganiser, eventTime);
+            String matchDetailsString = eventDetails.toString();
+
             // redirect to event details page
             Intent intent = new Intent(this, MatchDetailsActivity.class);
             intent.putExtra("Activity", eventActivity);
-            intent.putExtra("Match Details", strDetails);
+            intent.putExtra("Match Details", matchDetailsString);
             startActivity(intent);
         } else {
             Message.message(this, "Please make sure all the fields are filled in");
@@ -180,9 +177,9 @@ public class CreateEvent extends AppCompatActivity {
         // How to get the organiser? Current logged in user?
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         String eventOrganiser = firebaseUser.getEmail().toString();
-
+        String participants = eventOrganiser + ", ";
         // Create an Event object and push that to the database
-        Event newEvent = new Event(eventDate, eventLocation, eventOrganiser, eventTime);
+        Event newEvent = new Event(eventDate, eventLocation, eventOrganiser, participants, eventTime);
         myRef.child(eventActivity.toLowerCase()).child(eventName).setValue(newEvent);
     }
 }

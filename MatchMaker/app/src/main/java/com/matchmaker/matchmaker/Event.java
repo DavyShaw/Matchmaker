@@ -13,24 +13,29 @@ public class Event {
     public String date;
     public String location;
     public String organiser;
+    public String participants = "";
     public String time;
 
     public Event() {
         // Default constructor required for calls to DataSnapshot.getValue()
     }
 
-    public Event(String date, String location, String organiser, String time) {
+    public Event(String date, String location, String organiser, String participants, String time) {
 
         this.organiser = organiser;
         this.date = date;
         this.time = time;
+        this.participants = participants;
         this.location = location;
     }
 
     public String toString() {
         String eventStringRepresentation = new String();
-        eventStringRepresentation += (this.organiser + ", " + this.date
-                + ", " + this.time + ", " + this.location);
+        eventStringRepresentation += (this.organiser + "; " + this.date
+                + ", " + this.time + "; " + this.location + "; ");
+        if (participants != "") {
+            eventStringRepresentation += ("; " + participants);
+        }
         return eventStringRepresentation;
     }
 }

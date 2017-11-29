@@ -4,11 +4,12 @@ package com.matchmaker.matchmaker;
  Authors: Davy Shaw, Emma Byrne
  Date: 06/11/2017
  Course: COMP 41690 Android Programming
- Desc:
- Usage:
-
+ Usage: Activity allows a user to register an account. The credentials are sent to firebase where
+ they are stored. When the user registers for the first time, an instance of the local database
+ is set up.
  **************************************************************************************************/
-//Part of Code taken from https://www.simplifiedcoding.net/android-firebase-tutorial-1/
+
+//Part of Code for firebase taken from https://www.simplifiedcoding.net/android-firebase-tutorial-1/
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -26,11 +27,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RegisterScreen extends AppCompatActivity implements View.OnClickListener {
 

@@ -1,0 +1,19 @@
+16.11.17 12:30pm
+
+cara notes
+
+cara: push search results activity, need to parse out searching method
+pamela: working on sensors, accelerometer, for gps, location use, 
+emma: integrate davy's and her code, sorted user account pushed to git, user can join event(not sure this is correct?). need to set up db, 
+davy: firebases use dicts, google maps api to get directions into app, to meet this requirement, getting the event stored in the google calendar and maps
+andy: integrating events details into app
+
+research: store event details, check for articles, usability offline, 
+
+report: 
+everyone gets two papers, relevant
+outline selling points, begin drafting sections
+
+
+
+

@@ -6,6 +6,14 @@ import java.util.ArrayList;
  * Created by andrew on 13/11/2017.
  */
 
+/**************************************************************************************************
+ - Name of activity here -
+ Authors:
+ Date:
+ Course: COMP 41690 Android Programming
+ Usage:
+ **************************************************************************************************/
+
 
 public class MatchData {
     private String what;

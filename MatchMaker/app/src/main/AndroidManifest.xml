@@ -43,7 +43,7 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ProfileActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"/>
 
         <activity
             android:name=".MatchDetailsActivity"

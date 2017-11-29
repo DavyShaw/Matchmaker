@@ -1,12 +1,4 @@
 package com.matchmaker.matchmaker;
-/**************************************************************************************************
- - Name of activity here -
- Authors:
- Date:
- Course: COMP 41690 Android Programming
- Usage:
- **************************************************************************************************/
-
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -28,19 +20,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.Semaphore;
 
 // save data before moving onto next intent
 // or flush it to a file or a store or something
 
 public class SearchResults extends AppCompatActivity {
-    private final static String TAG="SearchResults";
     String stringResults;
     String userActivityChoice;
     String[] arrayResults = new String[5];
-    ArrayList<Event> events = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,19 +37,17 @@ public class SearchResults extends AppCompatActivity {
         // get extra data sent with intent creation
         // Check whether we're recreating a previously destroyed instance
         if (savedInstanceState != null) {
+            System.out.println("IN THE IF Saved instance state is not equal to null");
             userActivityChoice = savedInstanceState.getString("userActivityChoice");
             stringResults = savedInstanceState.getString("stringResults");
             arrayResults = savedInstanceState.getStringArray("arrayResults");
-            events = (ArrayList<Event>) savedInstanceState.getSerializable("events");
         } else {
+            System.out.println("IN THE ELSE - instance state must be equal to null");
             // Probably initialize members with default values for a new instance
             Bundle extras = savedInstanceState != null ? savedInstanceState : getIntent().getExtras();
             stringResults = extras.getString("userPreferences");
             userActivityChoice = extras.getString("Activity");
             arrayResults = stringResults.split("!");
-            events = (ArrayList<Event>) extras.getSerializable("events");
-            for (Event e : events)
-                Log.d(TAG, "EVNT="+e.toDebugString());
         }
 
         // Array to show results
@@ -76,7 +62,6 @@ public class SearchResults extends AppCompatActivity {
                 Intent intent = new Intent(SearchResults.this, MatchDetailsActivity.class);
                 intent.putExtra("Activity", userActivityChoice);
                 intent.putExtra("Match Details", resultsListView.getItemAtPosition(i).toString());
-                intent.putExtra("event", events.get(i));
                 startActivity(intent);
             }
         });
@@ -93,7 +78,7 @@ public class SearchResults extends AppCompatActivity {
         savedInstanceState.putString("userActivityChoice", userActivityChoice);
         savedInstanceState.putString("stringResults", stringResults);
         savedInstanceState.putStringArray("arrayResults", arrayResults);
-        savedInstanceState.putSerializable("events", events);
+
     }
 
     @Override
@@ -104,8 +89,7 @@ public class SearchResults extends AppCompatActivity {
         String userActivityChoice = savedInstanceState.getString("userActivityChoice");
         String stringResults = savedInstanceState.getString("stringResults");
         String[] arrayResults = savedInstanceState.getStringArray("arrayResults");
-        ArrayList<Event> events = (ArrayList<Event>) savedInstanceState.getSerializable("events");
     }
-    }
+}
 
 //reference for setOnItemClickListener https://www.youtube.com/watch?v=wSCIuIbS-nk

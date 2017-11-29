@@ -1,14 +1,5 @@
 package com.matchmaker.matchmaker;
 
-/**************************************************************************************************
- - Name of activity here -
- Authors:
- Date:
- Course: COMP 41690 Android Programming
- Usage:
- **************************************************************************************************/
-
-
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
@@ -42,14 +33,10 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
 
 public class MatchPreferencesActivity extends AppCompatActivity {
-    private static String TAG = "MatchPreferencesActivity";
-
     private int mYear, mMonth, mDay, mHour, mMinute;
     private String userTimeChoice;
     private String userDateChoice;
@@ -76,7 +63,7 @@ public class MatchPreferencesActivity extends AppCompatActivity {
         //Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter
                 .createFromResource(this, R.array.sports_list_values,
-                android.R.layout.simple_spinner_item);
+                        android.R.layout.simple_spinner_item);
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -148,20 +135,8 @@ public class MatchPreferencesActivity extends AppCompatActivity {
         eventQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                // HashMap<String, Event> events = new HashMap<>();
-                ArrayList<Event> events = new ArrayList<>();
                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-                    String eventName = singleSnapshot.getKey();
-                    System.out.println("KEY");
-                    System.out.println(eventName);
                     Event event = singleSnapshot.getValue(Event.class);
-                    event.setEventName(singleSnapshot.getKey());
-                    event.setCategory(userActivityChoice);
-                    //events.put(event.getEventName(), event);
-                    events.add(event);
-                    Log.d(TAG, "EVENT="+event.toDebugString());
-                    // might be able to get rid of this
                     String eventString = event.toString();
                     matchResults[count] = eventString;
                     count += 1;
@@ -176,11 +151,9 @@ public class MatchPreferencesActivity extends AppCompatActivity {
                         }
                     }
                     String userPrefs = userPreferences.toString();
-                    System.out.println(userPrefs); // doesn't include name of the match
                     Intent intent = new Intent(getBaseContext(), SearchResults.class);
                     intent.putExtra("Activity", userActivityChoice);
                     intent.putExtra("userPreferences", userPrefs);
-                    intent.putExtra("events", events);
                     startActivity(intent);
                 }
             }
@@ -195,7 +168,7 @@ public class MatchPreferencesActivity extends AppCompatActivity {
         });
 
     }
-    }
+}
 
 
 

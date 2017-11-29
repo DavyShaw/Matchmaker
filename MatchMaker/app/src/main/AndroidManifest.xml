@@ -66,6 +66,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MatchPreferencesActivity" />
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDhh8c3OnMvqVpQXab1ermm8cfCH9lZaYc" />
+        <activity
+            android:name=".Navigation"
+            android:label="Map" />
     </application>
 
 </manifest>

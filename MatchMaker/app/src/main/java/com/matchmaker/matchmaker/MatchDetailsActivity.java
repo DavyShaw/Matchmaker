@@ -18,6 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import java.io.IOException;
@@ -26,24 +30,36 @@ import java.util.List;
 
 public class MatchDetailsActivity extends AppCompatActivity  {
     private static String TAG = "MatchDetailsActivity";
+    private FirebaseAuth firebaseAuth;
+    myDbAdapter dbAdapter;
     String matchDetails;
     String activityUserChoice;
+    // event details
+    String eventDetails;
+    String participants;
+    String eventName;
+    String eventOrganiser;
+    String eventDate;
+    String eventTime;
+    String eventLocation;
+
     public static String address = "";
     public static LatLng event_location = new LatLng(0,0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        dbAdapter = new myDbAdapter(this); // start a db instance
         Bundle extras = getIntent().getExtras();
         // Match Details Contains: Name, Organiser, Date, Time, Location, Participants
         activityUserChoice = extras.getString("Activity");
         matchDetails = extras.getString("Match Details");
-        String eventDetails = matchDetails.split(";")[0];
-        String participants = matchDetails.split(";")[0];
-        String eventName = eventDetails.split(",")[0];
-        String eventOrganiser = eventDetails.split(",")[1];
-        String eventDate = eventDetails.split(",")[2];
-        String eventTime = eventDetails.split(",")[3];
-        String eventLocation = eventDetails.split(",")[4];
+        eventDetails = matchDetails.split(";")[0];
+        participants = matchDetails.split(";")[1];
+        eventName = eventDetails.split(",")[0];
+        eventOrganiser = eventDetails.split(",")[1];
+        eventDate = eventDetails.split(",")[2];
+        eventTime = eventDetails.split(",")[3];
+        eventLocation = eventDetails.split(",")[4];
 
         Event event = new Event(eventDate, eventLocation, eventName, eventOrganiser, participants, eventTime);
         System.out.println("checking event details");
@@ -64,8 +80,8 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         String[] participantsArray = participants.split(",");
         // https://stackoverflow.com/questions/5070830/populating-a-listview-using-an-arraylist
         ListView lvParticipants = (ListView) findViewById(R.id.lvParticipants);
-        ArrayAdapter<String> aa = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, participantsArray);
-        lvParticipants.setAdapter(aa);
+        ArrayAdapter<String> participantsArrayAdapt = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, participantsArray);
+        lvParticipants.setAdapter(participantsArrayAdapt);
 
         // Getting Directions for the User to the Event
         Geocoder coder = new Geocoder(this);
@@ -94,6 +110,29 @@ public class MatchDetailsActivity extends AppCompatActivity  {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onJoinEventClick(View view) {
+        DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference("events")
+                .child(activityUserChoice.toLowerCase()).child(eventName);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        // user should never be null because unauthorised users don't have access to this page
+        participants += (", " + user.getEmail());
+        // replaces the current string with new updated string
+        eventRef.child("participants").setValue(participants);
+        Message.message(this, "Successfully added to event");
+        // TODO: Set Join Event Button To Leave Event
+    }
+
+    public void addToUserDB(View view, String eventName, String eventDate) {
+        // get user details
+        FirebaseUser user2 = firebaseAuth.getCurrentUser();
+        String email = user2.getEmail();
+        String oldEvent = dbAdapter.getEventData(email);
+
+        StringBuilder eventInfo = new StringBuilder();
+        eventInfo.append(eventName + ", " + eventTime + ", " + eventDate);
+        dbAdapter.updateEvents(email, oldEvent, eventInfo.toString());
     }
 
     public LatLng getLocationFromAddress(Geocoder coder, String strAddress) {

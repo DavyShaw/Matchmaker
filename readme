@@ -1,0 +1,5 @@
+Sample Login for Application
+Username: david@matchmakerapp.com
+Password: android
+
+When running the application be sure to run the application with a Wi-Fi connection as it is unable to connect to Firebase with this connection

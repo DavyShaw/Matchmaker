@@ -135,10 +135,96 @@ public class MatchPreferencesActivity extends AppCompatActivity {
     }
 
     public void sendPreferences(View view) {
-        getMatches();
+        // Ideally there would be an option here for users to search either by sport
+        // or by date/time - at the moment the Sport one is the only one enabled.
+        getMatchesBySport();
     }
 
-    public void getMatches() {
+    public void getMatchesByDate() {
+        //this is called by inputs to search by date ONLY
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //filter by date range: these variables added to showDatePickerDialog as query range
+        final Calendar c = Calendar.getInstance();
+        int mDate = c.get(Calendar.DATE);
+        int mTime = mHour; // could be more precise with more time to fully implement
+        final int startDate = mDate - 2;
+        final int finishDate = mDate + 2;
+        DatabaseReference eventsRef = FirebaseDatabase.getInstance().getReference("events").child(userActivityChoice.toLowerCase());
+
+        eventsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Intent intent = new Intent(getBaseContext(), SearchResults.class);
+                intent.putExtra("Activity", userActivityChoice);
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    Event event = singleSnapshot.getValue(Event.class);
+                    int numDate = Integer.parseInt(event.date.split("-")[0]);
+                    if (numDate >= startDate && numDate <= finishDate) {
+                        String eventString = event.toString();
+                        String eventName = singleSnapshot.getKey();
+                        intent.putExtra("Event" + Integer.toString(count), eventString);
+                        count += 1;
+                        // Doesn't always get to 5!
+                        if (count >= 5) {
+                            break;
+                        }
+                    }
+                    }
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post Failed, log a message
+                Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
+            }
+        });;
+    };
+
+    public void getMatchesByTime() {
+        //this is called by inputs to search by time ONLY
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //filter by time range: these variables added to showTimePickerDialog as query range
+        final int startHour = mHour - 5;
+        final int finishHour = mHour + 5;
+        DatabaseReference eventTimeRef = database.getReference("events").child(userActivityChoice.toLowerCase());
+
+        eventTimeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Intent intent = new Intent(getBaseContext(), SearchResults.class);
+                intent.putExtra("Activity", userActivityChoice);
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    Event event = singleSnapshot.getValue(Event.class);
+                    int eventHour = Integer.parseInt(event.time.split(":")[0]);
+                    if (eventHour >= startHour && eventHour <= finishHour) {
+                        String eventString = event.toString();
+                        String eventName = singleSnapshot.getKey();
+                        intent.putExtra("Event" + Integer.toString(count), eventString);
+                        count += 1;
+                        // Doesn't always get to 5!
+                        if (count >= 5) {
+                            break;
+                        }
+                    }
+                }
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post Failed, log a message
+                Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
+            }
+
+
+        });
+    };
+
+    public void getMatchesBySport() {
         //################### Get Data from Firebase ############################
 
         // Get a firebase instance

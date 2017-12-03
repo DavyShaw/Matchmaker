@@ -121,7 +121,7 @@ public class CreateEvent extends AppCompatActivity {
 
             // store data in array to pass to send with intent
             String[] matchDetails = {eventOrganiser, eventDate, eventTime, eventLocation};
-            Event eventDetails = new Event(eventDate, eventLocation, eventOrganiser, eventOrganiser, eventTime);
+            Event eventDetails = new Event(eventDate, eventLocation, eventName, eventOrganiser, eventOrganiser, eventTime);
             String matchDetailsString = eventDetails.toString();
 
             // redirect to event details page
@@ -176,10 +176,9 @@ public class CreateEvent extends AppCompatActivity {
 
         // How to get the organiser? Current logged in user?
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        String eventOrganiser = firebaseUser.getEmail().toString();
-        String participants = eventOrganiser + ", ";
+        eventOrganiser = firebaseUser.getEmail().toString();
         // Create an Event object and push that to the database
-        Event newEvent = new Event(eventDate, eventLocation, eventOrganiser, participants, eventTime);
+        Event newEvent = new Event(eventDate, eventLocation, eventName, eventOrganiser, eventOrganiser, eventTime);
         myRef.child(eventActivity.toLowerCase()).child(eventName).setValue(newEvent);
     }
 }

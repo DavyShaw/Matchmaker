@@ -1,4 +1,11 @@
 package com.matchmaker.matchmaker;
+/**************************************************************************************************
+ SearchResults
+ Authors: Cara Delorey, Pamela Kelly, Andrew Cameron
+ Date:
+ Course: COMP 41690 Android Programming
+ Usage: An Activity for presenting a list of results of events based on user's input preferences
+ **************************************************************************************************/
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -37,17 +44,18 @@ public class SearchResults extends AppCompatActivity {
         // get extra data sent with intent creation
         // Check whether we're recreating a previously destroyed instance
         if (savedInstanceState != null) {
-            System.out.println("IN THE IF Saved instance state is not equal to null");
             userActivityChoice = savedInstanceState.getString("userActivityChoice");
-            stringResults = savedInstanceState.getString("stringResults");
             arrayResults = savedInstanceState.getStringArray("arrayResults");
         } else {
-            System.out.println("IN THE ELSE - instance state must be equal to null");
-            // Probably initialize members with default values for a new instance
             Bundle extras = savedInstanceState != null ? savedInstanceState : getIntent().getExtras();
-            stringResults = extras.getString("userPreferences");
+            // Event Strings give details in the order of: Event Name, Organiser, Date, Time, Location and Participants
+            // Participants is separated by a ; and everything else can be split by ,
+            arrayResults[0] = extras.getString("Event0");
+            arrayResults[1] = extras.getString("Event1");
+            arrayResults[2] = extras.getString("Event2");
+            arrayResults[3] = extras.getString("Event3");
+            arrayResults[4] = extras.getString("Event4");
             userActivityChoice = extras.getString("Activity");
-            arrayResults = stringResults.split("!");
         }
 
         // Array to show results
@@ -76,7 +84,6 @@ public class SearchResults extends AppCompatActivity {
         // This bundle will be passed to onCreate if the process is
         // killed and restarted.
         savedInstanceState.putString("userActivityChoice", userActivityChoice);
-        savedInstanceState.putString("stringResults", stringResults);
         savedInstanceState.putStringArray("arrayResults", arrayResults);
 
     }
@@ -87,7 +94,6 @@ public class SearchResults extends AppCompatActivity {
         // Restore UI state from the savedInstanceState.
         // This bundle has also been passed to onCreate.
         String userActivityChoice = savedInstanceState.getString("userActivityChoice");
-        String stringResults = savedInstanceState.getString("stringResults");
         String[] arrayResults = savedInstanceState.getStringArray("arrayResults");
     }
 }

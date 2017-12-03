@@ -1,4 +1,12 @@
 package com.matchmaker.matchmaker;
+/**************************************************************************************************
+ Profile Activity
+ Authors: Davy Shaw
+ Date: 06/11/2017
+ Course: COMP 41690 Android Programming
+ Usage: Contains the map fragment which displays the event marker and clicking upon the marker
+ gives options to connect to the external app
+ **************************************************************************************************/
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

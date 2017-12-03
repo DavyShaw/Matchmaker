@@ -1,4 +1,11 @@
 package com.matchmaker.matchmaker;
+/**************************************************************************************************
+ Match Preferences Activity
+ Authors: Pamela Kelly, Emma Byrne, Andrew Cameron
+ Date:
+ Course: COMP 41690 Android Programming
+ Usage: An Activitiy for enabling the user to set their preferences for searching for events.
+ **************************************************************************************************/
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -37,13 +44,20 @@ import java.util.Calendar;
 import java.util.Map;
 
 public class MatchPreferencesActivity extends AppCompatActivity {
+    // variables for use in the time and date pickers
     private int mYear, mMonth, mDay, mHour, mMinute;
+
+    // variables for representing the user's preference choices
     private String userTimeChoice;
     private String userDateChoice;
     private String userActivityChoice;
+    StringBuilder matchResultsTemp = new StringBuilder();
+
+    // Array to store results from query
     String[] matchResults = new String[5];
-    StringBuilder userPreferences = new StringBuilder();
-    int count = 0;
+    int count = 0; // used later to index array
+
+    // Other variables needed
     private ProgressDialog progressDialog;
 
     @Override
@@ -122,40 +136,34 @@ public class MatchPreferencesActivity extends AppCompatActivity {
 
     public void sendPreferences(View view) {
         getMatches();
-        System.out.println("Called getMatches()");
     }
 
     public void getMatches() {
-        // Method to get the data from Firebase
         //################### Get Data from Firebase ############################
 
+        // Get a firebase instance
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("events");
-        Query eventQuery = myRef.child(userActivityChoice.toLowerCase());
+
+        // Get a reference for the "table" we want to access using key "events"
+        DatabaseReference eventQuery = database.getReference("events").child(userActivityChoice.toLowerCase());
+        // Query eventQuery = myRef.child(userActivityChoice.toLowerCase());
         eventQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Intent intent = new Intent(getBaseContext(), SearchResults.class);
+                intent.putExtra("Activity", userActivityChoice);
                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     Event event = singleSnapshot.getValue(Event.class);
                     String eventString = event.toString();
-                    matchResults[count] = eventString;
+                    String eventName = singleSnapshot.getKey();
+                    intent.putExtra("Event" + Integer.toString(count), eventString);
                     count += 1;
                     // Doesn't always get to 5!
                     if (count >= 5) {
                         break;
                     }
-                    for (String match : matchResults) {
-                        if (match != null) {
-                            userPreferences.append(match);
-                            userPreferences.append("!");
-                        }
-                    }
-                    String userPrefs = userPreferences.toString();
-                    Intent intent = new Intent(getBaseContext(), SearchResults.class);
-                    intent.putExtra("Activity", userActivityChoice);
-                    intent.putExtra("userPreferences", userPrefs);
-                    startActivity(intent);
                 }
+                startActivity(intent);
             }
 
             @Override

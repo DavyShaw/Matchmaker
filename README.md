@@ -10,6 +10,7 @@ A sample login is therefore supplied.
   - Password: android
 
 This application uses the Firebase API for its functionality. Firebase needs a strong network connection to function. It is therefore recommended that when using the application that a Wi-Fi connection is used over a moblile connection.
+Furthermore, due to the nature of Firebase, Google accounts are required for registration, if registration is being tested.
 
 
 ### Authors:

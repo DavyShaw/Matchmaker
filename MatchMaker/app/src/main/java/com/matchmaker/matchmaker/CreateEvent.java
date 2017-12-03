@@ -116,6 +116,8 @@ public class CreateEvent extends AppCompatActivity {
         // get the data from the activity
         // first check that all the things are filled in
         if (getEventData(view)) {
+            EditText location = (EditText) findViewById(R.id.location);
+            eventLocation = location.toString();
             addToUserDB(view); // call to update the local database
             addEventToRemoteDB(view); // add event to firebase
 
@@ -168,7 +170,8 @@ public class CreateEvent extends AppCompatActivity {
     public void addEventToRemoteDB(View view) {
         //############### Storing Data Remotely in Firebase ####################
         // Add the user to the Users Info Table in the Firebase Database
-
+        EditText location = (EditText) findViewById(R.id.location);
+        eventLocation = location.toString();
         // Get an instance of the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         // Get a reference for the "users" section

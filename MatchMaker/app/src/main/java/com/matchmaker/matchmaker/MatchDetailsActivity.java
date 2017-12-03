@@ -117,11 +117,23 @@ public class MatchDetailsActivity extends AppCompatActivity  {
                 .child(activityUserChoice.toLowerCase()).child(eventName);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // user should never be null because unauthorised users don't have access to this page
-        participants += (", " + user.getEmail());
-        // replaces the current string with new updated string
-        eventRef.child("participants").setValue(participants);
-        Message.message(this, "Successfully added to event");
-        // TODO: Set Join Event Button To Leave Event
+        if (participants.contains(user.getEmail())) {
+            Message.message(this, "You are already attending this event");
+        }
+        else {
+            participants += (", " + user.getEmail());
+            // replaces the current string with new updated string
+            eventRef.child("participants").setValue(participants);
+            Message.message(this, "Successfully added to event");
+            // change join event button: id: bJoinEvent
+            Button p1_button = (Button) findViewById(R.id.bJoinEvent);
+            p1_button.setText("Your are a Member of This Event");
+            String[] participantsArray = participants.split(",");
+            // https://stackoverflow.com/questions/5070830/populating-a-listview-using-an-arraylist
+            ListView lvParticipants = (ListView) findViewById(R.id.lvParticipants);
+            ArrayAdapter<String> participantsArrayAdapt = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, participantsArray);
+            lvParticipants.setAdapter(participantsArrayAdapt);
+        }
     }
 
     public void addToUserDB(View view, String eventName, String eventDate) {

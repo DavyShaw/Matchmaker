@@ -1,8 +1,7 @@
 package com.matchmaker.matchmaker;
 /**************************************************************************************************
  Match Preferences Activity
- Authors: Pamela Kelly, Emma Byrne, Andrew Cameron
- Date:
+ Authors: Pamela Kelly, Andrew Cameron
  Course: COMP 41690 Android Programming
  Usage: An Activitiy for enabling the user to set their preferences for searching for events.
  **************************************************************************************************/

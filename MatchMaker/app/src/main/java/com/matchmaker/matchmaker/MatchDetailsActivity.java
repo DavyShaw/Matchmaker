@@ -1,8 +1,7 @@
 package com.matchmaker.matchmaker;
 /**************************************************************************************************
  MatchDetailsActivity
- Authors: Andrew Cameron, Pamela Kelly
- Date:
+ Authors: Andrew Cameron, Pamela Kelly, Emma Byrne
  Course: COMP 41690 Android Programming
  Usage: An Activity for presenting the details of an individual event.
  **************************************************************************************************/
@@ -124,6 +123,8 @@ public class MatchDetailsActivity extends AppCompatActivity  {
             participants += (", " + user.getEmail());
             // replaces the current string with new updated string
             eventRef.child("participants").setValue(participants);
+            // Add to local DB here
+            addToUserDB(user);
             Message.message(this, "Successfully added to event");
             // change join event button: id: bJoinEvent
             Button p1_button = (Button) findViewById(R.id.bJoinEvent);
@@ -136,15 +137,11 @@ public class MatchDetailsActivity extends AppCompatActivity  {
         }
     }
 
-    public void addToUserDB(View view, String eventName, String eventDate) {
-        // get user details
-        FirebaseUser user2 = firebaseAuth.getCurrentUser();
-        String email = user2.getEmail();
-        String oldEvent = dbAdapter.getEventData(email);
-
+    public void addToUserDB(FirebaseUser user) {
+        String oldEvent = dbAdapter.getEventData(user.getEmail());
         StringBuilder eventInfo = new StringBuilder();
         eventInfo.append(eventName + ", " + eventTime + ", " + eventDate);
-        dbAdapter.updateEvents(email, oldEvent, eventInfo.toString());
+        dbAdapter.updateEvents(user.getEmail(), oldEvent, eventInfo.toString());
     }
 
     public LatLng getLocationFromAddress(Geocoder coder, String strAddress) {

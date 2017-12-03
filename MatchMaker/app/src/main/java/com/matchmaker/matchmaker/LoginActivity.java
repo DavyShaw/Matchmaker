@@ -2,7 +2,6 @@ package com.matchmaker.matchmaker;
 /**************************************************************************************************
  LoginActivity
  Authors: Davy Shaw, Emma Byrne
- Date:
  Course: COMP 41690 Android Programming
  Usage: Activity which enables a user to login to their account. If they have an account and enter
  their details correctly, they are brought to the ProfileActivity activity. If they do not have an

@@ -101,16 +101,14 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                             finish();
                             //user registered and logged in
                             // add to db - name will be email
-                            // parse the email to make it the username - or could just use email...
                             String[] accountName = email.split("\\@"); // - accountName[0].toString() = name before @ sign
-                            long id = dbAdapter.insertData(accountName[0].toString(), "no_preferences", email, "no_events_yet");
+                            long id = dbAdapter.insertData(accountName[0].toString(), "no_preferences", email, "");
                             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         }
                         else{
                             Message.message(RegisterScreen.this, "Registration Error");
                             editTextEmail.setText("");
                             editTextPassword.setText("");
-                            //Toast.makeText(RegisterScreen.this, "Registration Error", Toast.LENGTH_SHORT).show();
                         }
                         progressDialog.dismiss();
                     }

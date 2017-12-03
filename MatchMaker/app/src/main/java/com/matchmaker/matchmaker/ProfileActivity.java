@@ -175,11 +175,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    // Method to bring the user to where they can edit their profile
     public void go_to_edit(View view){
         setContentView(R.layout.activity_profile_edit);
         setTextView_userData(view);
     }
 
+    // Method to bring a user back from the edit view to their profile view
     public void back_to_profile(View view){
         setContentView(R.layout.activity_profile);
         setTextView_userData(view);

@@ -3,7 +3,6 @@ package com.matchmaker.matchmaker;
 /**************************************************************************************************
  Event Class
  Authors: Pamela Kelly
- Date:
  Course: COMP 41690 Android Programming
  Usage: Model Class to represent user objects from the Firebase database.
  **************************************************************************************************/

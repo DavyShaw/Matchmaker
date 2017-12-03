@@ -2,7 +2,6 @@ package com.matchmaker.matchmaker;
 /**************************************************************************************************
  SearchResults
  Authors: Cara Delorey, Pamela Kelly, Andrew Cameron
- Date:
  Course: COMP 41690 Android Programming
  Usage: An Activity for presenting a list of results of events based on user's input preferences
  **************************************************************************************************/

@@ -19,43 +19,55 @@
     <Spinner
         android:id="@+id/sports_spinner"
         android:layout_width="368dp"
-        android:layout_height="wrap_content"
+        android:layout_height="31dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:editable="false"
+        android:focusable="false"
         android:hint="@string/time_hint"
-        android:inputType="time"
         android:imeOptions="actionSend"
+        android:inputType="time"
         android:onClick="showTimePickerDialog"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sports_spinner"
-        android:editable="false"
-        android:focusable="false"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sports_spinner" />
 
     <EditText
         android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:editable="false"
+        android:focusable="false"
         android:hint="@string/date_hint"
-        android:inputType="date"
         android:imeOptions="actionSend"
+        android:inputType="date"
         android:onClick="showDatePickerDialog"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/time"
-        android:editable="false"
-        android:focusable="false"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time" />
 
     <Button
         android:id="@+id/submitPreferences"

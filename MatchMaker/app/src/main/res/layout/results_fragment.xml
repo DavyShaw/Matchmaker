@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/resultFragText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="73dp"
+        android:width="300dp"
+        android:text="filter results"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/darker_gray"
+        tools:text="@string/resultsFragEdit"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@android:dimen/notification_large_icon_width"
+        android:layout_height="@android:dimen/notification_large_icon_height"
+        android:width="80dp"
+        android:height="80dp"
+        android:contentDescription="@android:string/untitled"
+        android:visibility="visible"
+        app:srcCompat="@drawable/football"
+        android:layout_alignTop="@+id/imageView2"
+        android:layout_alignStart="@+id/resultFragText"
+        android:layout_marginStart="55dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="@android:dimen/notification_large_icon_width"
+        android:layout_height="@android:dimen/notification_large_icon_height"
+        android:width="200dp"
+        android:height="200dp"
+        app:srcCompat="@drawable/gaelic"
+        android:layout_marginTop="53dp"
+        android:layout_marginEnd="55dp"
+        android:layout_below="@+id/resultFragText"
+        android:layout_alignEnd="@+id/resultFragText" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="@android:dimen/notification_large_icon_width"
+        android:layout_height="@android:dimen/notification_large_icon_height"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@drawable/basketball" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="@android:dimen/notification_large_icon_width"
+        android:layout_height="@android:dimen/notification_large_icon_height"
+        android:layout_alignStart="@+id/imageView2"
+        android:layout_alignTop="@+id/imageView3"
+        app:srcCompat="@drawable/rugby" />
+
+</RelativeLayout>

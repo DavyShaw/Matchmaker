@@ -116,8 +116,8 @@ public class CreateEvent extends AppCompatActivity {
         // get the data from the activity
         // first check that all the things are filled in
         if (getEventData(view)) {
-            EditText location = (EditText) findViewById(R.id.location);
-            eventLocation = location.toString();
+            EditText edit = (EditText)findViewById(R.id.location);
+            eventLocation = edit.getText().toString();
             addToUserDB(view); // call to update the local database
             addEventToRemoteDB(view); // add event to firebase
 

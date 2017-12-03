@@ -37,14 +37,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
         <activity
             android:name=".RegisterScreen"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ProfileActivity"
-            android:parentActivityName=".MainActivity"/>
-
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MatchDetailsActivity"
             android:parentActivityName=".SearchResults">
@@ -70,9 +68,11 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDhh8c3OnMvqVpQXab1ermm8cfCH9lZaYc" />
+
         <activity
             android:name=".Navigation"
             android:label="Map" />
+        <activity android:name=".resultsFragment"></activity>
     </application>
 
 </manifest>
